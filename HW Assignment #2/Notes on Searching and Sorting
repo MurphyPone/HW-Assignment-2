@@ -1,0 +1,35 @@
+Searching and Sorting
+	-Java.util.Arrays & Java.util.Collection
+	
+Comparing objects
+	.equals(obj2)		returns boolean  //compares addresses of the oject, pretty much useless, always need to override in our Classes
+	.compareTo(obj2)	returns -1,0, or 1
+	.compare(obj1, obj2)returns -1,0, or 1 
+	
+	all of these come from Object class
+	
+	Ex:
+	public boolean equals(Object other) [
+		if (other != null) //or more specifically if(other intanceof Pet)
+			return <personal formula to determine equity, name, age, all of the above etc.>
+		else 
+			return false;
+		}
+	}
+	
+	.equals is fine for primitives
+	
+.compareTo(obj2)		//FROM COMPARATOR, abstract method defined in the comparator interface
+	-returns 	+ int if obj1 > obj2
+				- int if obj1 < obj2
+				0 int if obj1 = obj2
+				
+				
+public class Pet implements Comparable<Pet> {
+	private String name;
+	
+	public int compareTo(Pet other) {
+		return name.compareTo(Object other);
+		
+	public boolean equals(Object other) 
+		return other instanceof Pet && compareTo((Pet)other ==0
