@@ -22,6 +22,6 @@ public class DeckTester {
 		
 		//Deck Testing
 		Deck sorted = new Deck();
-		Deck mixed = new Deck(false);
+		//Deck mixed = new Deck(false);
 	}
 }
