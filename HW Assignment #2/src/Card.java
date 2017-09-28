@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Card implements Comparator<Card>{
+public class Card {
 	//Fields									0			1			2		3
 	private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Clubs"};
 	private static final String[] ranks = {"Two", "Three", "Four", "Five", "Six", "Seven", 
@@ -8,7 +8,7 @@ public class Card implements Comparator<Card>{
 	private int suit;
 	private int rank;//Each rank/suit corresponds to a static final String value
 	
-	//Default constructor creates a random card------------------------------
+	//Default constructor creates a random  card------------------------------
 	public Card() {
 		this.suit = (int) (Math.random()*4);
 		this.rank = 2 + (int) (Math.random()*ranks.length); //should return a random # 2-14
@@ -84,17 +84,5 @@ public class Card implements Comparator<Card>{
 				return i;	//Returns the index of the corresponding suit
 		}
 		return -1;			//If input is not found, 
-	}
-	
-	//Comparator override?----------------
-
-	//TODO help with this???
-	public int compareTo(CardComparator o) {
-		return 0;
-	}
-
-	@Override
-	public int compare(Card o1, Card o2) {
-		return 0;
 	}
 }

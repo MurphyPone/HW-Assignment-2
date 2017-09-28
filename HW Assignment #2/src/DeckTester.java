@@ -2,6 +2,7 @@
 public class DeckTester {
 
 	public static void main(String[] args) {
+		
 		Card aD = new Card("Diamonds", 14);	//Ace of Diamonds
 		System.out.println(aD.toString() );
 		
@@ -14,11 +15,8 @@ public class DeckTester {
 		Card rand = new Card();				//Random Card
 		System.out.println(rand.toString() );
 		
-		System.out.println(aD.compareTo(twoH) );
-
-		
-		
-
+		//Card Comparator
+		CardComparator comp = new CardComparator();
+		System.out.println(comp.compare(aD, aD) );
 	}
-
 }
