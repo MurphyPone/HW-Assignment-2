@@ -1,5 +1,6 @@
+import java.util.Comparator;
 
-public class Card implements Comparable<CardComparator>{
+public class Card implements Comparator<Card>{
 	//Fields									0			1			2		3
 	private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Clubs"};
 	private static final String[] ranks = {"Two", "Three", "Four", "Five", "Six", "Seven", 
@@ -10,13 +11,17 @@ public class Card implements Comparable<CardComparator>{
 	//Default constructor creates a random card------------------------------
 	public Card() {
 		this.suit = (int) (Math.random()*4);
-		this.rank = (int) (Math.random()*14); //should return a random # 1-14
+		this.rank = 2 + (int) (Math.random()*ranks.length); //should return a random # 2-14
 	}
 	
 	//constructor variation ii.
 	public Card(int mSuit, int mRank ) {
 		this.suit = mSuit;
-		this.rank = mRank;	//-2 to adjust for where decks start
+		
+		if(isValidRank(mRank))
+			this.rank = mRank;
+		else 
+			this.rank = 2;	//if the user passes a value that is too high or low, it defaults to a 2
 	}
 	
 	//constructor variation iii.
@@ -28,13 +33,22 @@ public class Card implements Comparable<CardComparator>{
 	//constructor variation iv.
 	public Card(String mSuit, int  mRank) {
 		this.suit = getSuitInt(mSuit);	//Check if valid? or just send it...
-		this.rank = mRank;
+		
+		if(isValidRank(mRank))
+			this.rank = mRank;
+		else 
+			this.rank = 2;
 	}
 	
 	//constructor variation v.
 	public Card(int mSuit, String  mRank) {
 		this.suit = mSuit;	//Check if valid? or just send it...
 		this.rank = getRankInt(mRank);
+	}
+	
+	//Constructor helper
+	public boolean isValidRank(int r) {
+		return (r >= 2 && r < 15);
 	}
 		
 	//Getters------------------------------
@@ -48,12 +62,12 @@ public class Card implements Comparable<CardComparator>{
 	
 	//toString------------------------------
 	public String toString() {
-		return getRankStr() + " of " + suits[this.suit];
+		return getRankStr() + " of " + suits[this.suit]; //getRankStr() is causing problems
 	}
 	
 	//Conversion------------------------------
 	public String getRankStr() {
-		return ranks[this.rank-2];	//rank = 2 --> "two" == ranks[0]		//TODO Does not currently checkout
+		return ranks[this.rank-2];	//rank = 2 --> "two" == ranks[0]
 	}	
 	
 	public int getRankInt(String str) {
@@ -71,10 +85,16 @@ public class Card implements Comparable<CardComparator>{
 		}
 		return -1;			//If input is not found, 
 	}
+	
+	//Comparator override?----------------
+
+	//TODO help with this???
+	public int compareTo(CardComparator o) {
+		return 0;
+	}
 
 	@Override
-	public int compareTo(CardComparator o) {
-		// TODO Auto-generated method stub
+	public int compare(Card o1, Card o2) {
 		return 0;
 	}
 }
