@@ -85,4 +85,19 @@ public class Card {
 		}
 		return -1;			//If input is not found, 
 	}
+	
+	//Comparison------------------------------
+	public int compareTo(Card c) {
+		if(getRank()  > c.getRank()) 
+			return 1;
+		if(getRank() < c.getRank())
+			return -1;
+		if (getRank() == c.getRank() ) //TODO don;t think that this is valid
+			return 0;
+		return (Integer) null;	//If it makes it this far, then it's broken 
+	}
+	
+	public boolean equals(Card c) {
+		return c.getRank() == getRank() && c.getSuit() == getSuit(); //TODO same issue with == v. .equals here.  Returns a primitive right?
+	}
 }

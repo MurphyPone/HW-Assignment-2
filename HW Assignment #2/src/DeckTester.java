@@ -3,6 +3,7 @@ public class DeckTester {
 
 	public static void main(String[] args) {
 		
+		//Card Testing
 		Card aD = new Card("Diamonds", 14);	//Ace of Diamonds
 		System.out.println(aD.toString() );
 		
@@ -15,8 +16,12 @@ public class DeckTester {
 		Card rand = new Card();				//Random Card
 		System.out.println(rand.toString() );
 		
-		//Card Comparator
+		//CardComparator Testing
 		CardComparator comp = new CardComparator();
 		System.out.println(comp.compare(aD, aD) );
+		
+		//Deck Testing
+		Deck sorted = new Deck();
+		Deck mixed = new Deck(false);
 	}
 }
