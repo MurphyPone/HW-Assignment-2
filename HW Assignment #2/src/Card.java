@@ -1,6 +1,6 @@
-import java.util.Comparator;
+import java.util.*;
 
-public class Card {
+public class Card implements Comparable<Card> {
 	//Fields									0			1			2		3
 	private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
 	private static final String[] ranks = {"Two", "Three", "Four", "Five", "Six", "Seven", 
@@ -26,13 +26,13 @@ public class Card {
 	
 	//constructor variation iii.
 	public Card(String mSuit, String mRank) {
-		this.suit = getSuitInt(mSuit);
-		this.rank = getRankInt(mRank);
+		this.suit = getSuitInt();
+		this.rank = getRank();
 	}
 	
 	//constructor variation iv.
 	public Card(String mSuit, int  mRank) {
-		this.suit = getSuitInt(mSuit);	//Check if valid? or just send it...
+		this.suit = getSuitInt();	//Check if valid? or just send it...
 		
 		if(isValidRank(mRank))
 			this.rank = mRank;
@@ -43,7 +43,7 @@ public class Card {
 	//constructor variation v.
 	public Card(int mSuit, String  mRank) {
 		this.suit = mSuit;	//Check if valid? or just send it...
-		this.rank = getRankInt(mRank);
+		this.rank = getRank();
 	}
 	
 	//Constructor helper
@@ -52,24 +52,47 @@ public class Card {
 	}
 		
 	//Getters------------------------------
-	public int getSuit() {
-		return this.suit;
+	public String getSuit() {	
+		return suits[this.suit];	//Assignment says this needs to be in string form
 	}
 	
 	public int getRank() {
 		return this.rank; 
 	}
 	
-	//toString------------------------------
-	public String toString() {
-		return getRankStr() + " of " + suits[this.suit]; //getRankStr() is causing problems
-	}
-	
-	//Conversion------------------------------
+	//Alt-Getters------------------------------
 	public String getRankStr() {
 		return ranks[this.rank-2];	//rank = 2 --> "two" == ranks[0]
 	}	
 	
+	public int getSuitInt() {
+		return this.suit;
+	}
+	
+	//toString------------------------------
+		public String toString() {
+			return getRankStr() + " of " + getSuit(); //getRankStr() is causing problems
+		}
+	
+	//Comparison------------------------------
+	public int compareTo(Card c) {
+		if(getRank()  > c.getRank()) 
+			return 1;
+		if(getRank() < c.getRank())
+			return -1;
+		else 
+			return 0;
+	}
+	
+	/*
+	public boolean equals(Card c) {
+		return (c.getRank() == this.getRank() && c.getSuit() == this.getSuit() ); //TODO same issue with == v. .equals here.  Returns a primitive right?
+	}
+	
+	
+	
+	 neat but not needed
+	 * //This may not be necessary
 	public int getRankInt(String str) {
 		for(int i = 0; i < ranks.length; i ++) {
 			if(str.toLowerCase().equals(ranks[i].toLowerCase()) ) //handles more cases
@@ -78,6 +101,7 @@ public class Card {
 		return -1;			//If input is not found, 
 	}
 	
+	
 	public int getSuitInt(String str) {
 		for(int i = 0; i < suits.length; i ++) {
 			if(str.toLowerCase().equals(suits[i].toLowerCase()) ) //handles more cases
@@ -85,19 +109,5 @@ public class Card {
 		}
 		return -1;			//If input is not found, 
 	}
-	
-	//Comparison------------------------------
-	public int compareTo(Card c) {
-		if(getRank()  > c.getRank()) 
-			return 1;
-		if(getRank() < c.getRank())
-			return -1;
-		if (getRank() == c.getRank() ) //TODO don;t think that this is valid
-			return 0;
-		return (Integer) null;	//If it makes it this far, then it's broken 
-	}
-	
-	public boolean equals(Card c) {
-		return (c.getRank() == this.getRank() && c.getSuit() == this.getSuit() ); //TODO same issue with == v. .equals here.  Returns a primitive right?
-	}
+	*/
 }

@@ -10,7 +10,6 @@ public class Deck {
 	public Deck() {
 		this.myDeck = new Card[52]; //Creates an array with room for 52 cards
 		
-		//TODO Obfuscate sorted/shuffled to their own methods... ugh
 		sortedHelp();
 		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
 	}
@@ -27,7 +26,21 @@ public class Deck {
 		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
 	}
 	
-	//Constructor helpers
+	//TODO CREATE ANOTHER CONSTRUCTOR TO ACCEPT A DIFF SIZE DECK
+	//Need to populate with cards from pick....
+	public Deck(Deck selection, int size) {
+		this.myDeck = new Card[size]; //Creates an array with [size] slots
+		
+		//move each card from selection to array list, then draw from?
+		
+		for(int i = 0; i < size; i++) {
+			myDeck[i] = pick(selection);
+		}
+		
+		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
+	}
+	
+	//Constructor helpers----------------------------------------
 	public void sortedHelp() {
 		int s = 0;	//Suit counter
 		while (s < 4 ) {		//Do 4x 
@@ -59,8 +72,10 @@ public class Deck {
 	
 	//Getters
 	public Card[] getDeck() {
-		return myDeck;
+		return myDeck;	//For accessing the the cards
 	}
+	//a getCard method would be smart....
+	
 	//Shuffle	//TODO maybe not in compliance with assignment...
 	public void shuffle() {
 		Deck tempDeck = new Deck(false);	//Creates a temporary, shuffled deck to replace
@@ -70,10 +85,26 @@ public class Deck {
 		}
 	}
 	
+	//Pick
 	public Card pick(Deck d) {
 		return d.getDeck()[(int) (Math.random() * d.getDeck().length) + 1]; //TODO Check if this is acceptable
 	}
 	
+	//Deal
+	public Deck[] deal(int numHands, int cardsPer) {//numHands, cardsPerHand
+		Deck[] result = new Deck[numHands];
+		
+		//TODO does the order in which the cards are deakt matter?
+		/*while (myDeck.length.length > 0) { //Have to have cards in the deck
+			for(int i = 0; i < numHands; i++) {
+				result[i] = new Deck(cardsPer); 
+			}
+		}*/
+		
+		return result;
+	}
+	
+	//toString
 	public String toString() {		//TODO Lookup format specifiers %12s or something
 		String theShizzle = "";
 		if(isSorted) {

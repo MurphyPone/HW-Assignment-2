@@ -26,10 +26,12 @@ public class DeckTester {
 
 		Deck mixed = new Deck(false);
 		
-		System.out.print(mixed.toString() );
+		System.out.print("MIXED DECK TOSTRING: \n" + mixed.toString() );
 		
-		System.out.println("Sorted = sorted 2?" + sorted.equals(sorted2));//TODO double check
+		System.out.println("Sorted = sorted 2?" + sorted.equals(sorted2));
 		
 		sorted2.shuffle();
+		
+		System.out.println("Sorted = sorted 2? POST SHUFFLE " + sorted.equals(sorted2));
 	}
 }
