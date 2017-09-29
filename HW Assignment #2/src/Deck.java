@@ -61,7 +61,7 @@ public class Deck {
 	public Card[] getDeck() {
 		return myDeck;
 	}
-	//Shuffle
+	//Shuffle	//TODO maybe not in compliance with assignment...
 	public void shuffle() {
 		Deck tempDeck = new Deck(false);	//Creates a temporary, shuffled deck to replace
 		

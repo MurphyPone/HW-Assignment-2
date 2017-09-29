@@ -28,7 +28,7 @@ public class DeckTester {
 		
 		System.out.print(mixed.toString() );
 		
-		System.out.println(sorted.equals(sorted2));//TODO This returns false when it should return true
+		System.out.println("Sorted = sorted 2?" + sorted.equals(sorted2));//TODO double check
 		
 		sorted2.shuffle();
 	}
