@@ -22,7 +22,7 @@ public class Card {
 			this.rank = mRank;
 		else 
 			this.rank = 2;	//if the user passes a value that is too high or low, it defaults to a 2
-	}
+    	}
 	
 	//constructor variation iii.
 	public Card(String mSuit, String mRank) {
@@ -98,6 +98,6 @@ public class Card {
 	}
 	
 	public boolean equals(Card c) {
-		return c.getRank() == getRank() && c.getSuit() == getSuit(); //TODO same issue with == v. .equals here.  Returns a primitive right?
+		return (c.getRank() == this.getRank() && c.getSuit() == this.getSuit() ); //TODO same issue with == v. .equals here.  Returns a primitive right?
 	}
 }

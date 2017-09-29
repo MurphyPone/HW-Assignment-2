@@ -22,6 +22,12 @@ public class DeckTester {
 		
 		//Deck Testing
 		Deck sorted = new Deck();
-		//Deck mixed = new Deck(false);
+		Deck sorted2 = new Deck();
+
+		Deck mixed = new Deck(false);
+		
+		System.out.print(sorted.toString() );
+		
+		System.out.println(sorted.equals(sorted2));//TODO This returns false when it should return true
 	}
 }
