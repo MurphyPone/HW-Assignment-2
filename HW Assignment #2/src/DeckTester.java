@@ -18,7 +18,7 @@ public class DeckTester {
 		
 		//CardComparator Testing
 		CardComparator comp = new CardComparator();
-		System.out.println(comp.compare(aD, aD) );
+		System.out.println(comp.equals(aD, aD) );
 		
 		//Deck Testing
 		Deck sorted = new Deck();
@@ -26,8 +26,10 @@ public class DeckTester {
 
 		Deck mixed = new Deck(false);
 		
-		System.out.print(sorted.toString() );
+		System.out.print(mixed.toString() );
 		
 		System.out.println(sorted.equals(sorted2));//TODO This returns false when it should return true
+		
+		sorted2.shuffle();
 	}
 }

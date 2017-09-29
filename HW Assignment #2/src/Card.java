@@ -2,7 +2,7 @@ import java.util.Comparator;
 
 public class Card {
 	//Fields									0			1			2		3
-	private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Clubs"};
+	private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
 	private static final String[] ranks = {"Two", "Three", "Four", "Five", "Six", "Seven", 
 											"Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"};
 	private int suit;

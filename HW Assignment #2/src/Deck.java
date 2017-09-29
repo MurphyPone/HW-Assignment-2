@@ -1,4 +1,5 @@
-   
+import java.util.ArrayList;
+
 public class Deck {
 	//Fields
 	private Card[] myDeck; 
@@ -39,17 +40,18 @@ public class Deck {
 	}
 	
 	public void shuffledHelp() {
-		for(int i = 0; i < 52; i++ ) {	//Need 52 cards
-			Card tryC = new Card();	//Creates a random card
-			
-			for(int c = 0; c < myDeck.length; c ++) {
-				if( (myDeck[c] == null) || !(tryC.equals(myDeck[c]))  ) {	//TODO If they don't match or the value is null (empty)
-					myDeck[c] = tryC;
-				} else {
-					tryC = new Card(); //If it matches any other cards, redefine it's value with new RNG
-					c = 0; //reset the loop to re-check
-				}
-			}
+		Deck tempDeck = new Deck();	//Creates a temporary, sorted deck to draw from
+		System.out.print("TECHDECK\n\n" + tempDeck.toString() + "\n\n");	//TODO remove this later yo
+		ArrayList<Card> tempArrL = new ArrayList<Card>();
+	
+		for(int i = 0; i < tempDeck.getDeck().length; i++) {
+			tempArrL.add(tempDeck.getDeck()[i]);				//Inserts each of the cards into an arraylist for ez pickins
+		}
+		
+		for(int i = 0; i < tempDeck.getDeck().length; i++) {	//Needs a separate loop so that tempArrL gets filled
+			int r = (int) (Math.random() * tempArrL.size());	//Gets a random valid index of tempArrL
+			myDeck[i] = tempArrL.get(r);		//myDeck is filled with random pick from the shrinking tempArrL
+			tempArrL.remove(r);		//Removes that card from the tempArrL
 		}
 		
 		this.isSorted = false;
@@ -61,7 +63,15 @@ public class Deck {
 	}
 	//Shuffle
 	public void shuffle() {
-		//Cha cha real smooth
+		Deck tempDeck = new Deck(false);	//Creates a temporary, shuffled deck to replace
+		
+		for(int i = 0; i < tempDeck.getDeck().length; i++) {	//Needs a separate loop so that tempArrL gets filled
+			myDeck[i] = tempDeck.getDeck()[i];		//myDeck is filled with random pick from the shrinking tempArrL
+		}
+	}
+	
+	public Card pick(Deck d) {
+		return d.getDeck()[(int) (Math.random() * d.getDeck().length) + 1]; //TODO Check if this is acceptable
 	}
 	
 	public String toString() {		//TODO Lookup format specifiers %12s or something
@@ -84,7 +94,7 @@ public class Deck {
 	public boolean equals(Deck other) {
 		boolean same = true;
 		for(int i = 0; i < myDeck.length; i++) {
-			if(myDeck[i].equals(other.getDeck()[i])) 
+			if(!myDeck[i].equals(other.getDeck()[i])) 
 				same = false;
 		}
 		return same;
