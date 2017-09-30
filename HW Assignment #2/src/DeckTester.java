@@ -4,7 +4,7 @@ public class DeckTester {
 	public static void main(String[] args) {
 		
 		//Card Testing
-		Card aD = new Card("Diamonds", 14);	//Ace of Diamonds
+		/*Card aD = new Card("Diamonds", 14);	//Ace of Diamonds
 		System.out.println(aD.toString() );
 		
 		Card twoH = new Card(2, 2);			//2 of Hearts
@@ -15,23 +15,25 @@ public class DeckTester {
 		
 		Card rand = new Card();				//Random Card
 		System.out.println(rand.toString() );
+		*/
 		
-		//CardComparator Testing
+		/*//CardComparator Testing
 		CardComparator comp = new CardComparator();
 		System.out.println(comp.equals(aD, aD) );
+		*/
 		
 		//Deck Testing
 		Deck sorted = new Deck();
-		Deck sorted2 = new Deck();
-
 		Deck mixed = new Deck(false);
 		
-		System.out.print("MIXED DECK TOSTRING: \n" + mixed.toString() );
+		//Deal Testing
+		Deck[] texasHoldEm = mixed.deal(5, 2);	//Issue with printing decks <4
 		
-		System.out.println("Sorted = sorted 2?" + sorted.equals(sorted2));
+		Deck[] stud = mixed.deal(5, 5);
+
 		
-		sorted2.shuffle();
-		
-		System.out.println("Sorted = sorted 2? POST SHUFFLE " + sorted.equals(sorted2));
+		for(int i = 0; i < texasHoldEm.length; i++) {
+			System.out.println("5 Card Stud Hand: "+ i + "\n\n" + stud[i].toString());
+		}
 	}
 }

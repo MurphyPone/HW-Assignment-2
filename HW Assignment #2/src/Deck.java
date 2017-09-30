@@ -26,17 +26,22 @@ public class Deck {
 		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
 	}
 	
-	//TODO CREATE ANOTHER CONSTRUCTOR TO ACCEPT A DIFF SIZE DECK
 	//Need to populate with cards from pick....
-	public Deck(Deck selection, int size) {
+	public Deck(Card[] selection, int size) {
 		this.myDeck = new Card[size]; //Creates an array with [size] slots
 		
-		//move each card from selection to array list, then draw from?
+		ArrayList<Card> tempArrL = new ArrayList<Card>();
 		
-		for(int i = 0; i < size; i++) {
-			myDeck[i] = pick(selection);
+		for(int i = 0; i < selection.length; i++) {		//Moves cards from selection to an ArrayList
+			tempArrL.add(selection[i]);	
 		}
 		
+		for(int i = 0; i < size; i++) {
+			Card selectedCard = pick(selection);	//pickedCard var
+			myDeck[i] = selectedCard;		//Puts selected card into new deck
+			//TODO TODO TODO TODO REMOVE selectedCard from myDeck and Collapse myDeck accordingly 
+		}
+				
 		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
 	}
 	
@@ -45,7 +50,7 @@ public class Deck {
 		int s = 0;	//Suit counter
 		while (s < 4 ) {		//Do 4x 
 			for(int r = 2; r <= 14; r++) {	//r = rank value	//Should run 13x4 
-				this.myDeck[(13*s)+r-2] = new Card(s, r);	//TODO easy way to convert r ????? -2? although [13x3+13] = 52... shouldn't get any IOB excpetion
+				this.myDeck[(13*s)+r-2] = new Card(s, r);	//easy way to convert r ????? -2? although [13x3+13] = 52... shouldn't get any IOB excpetion
 			}
 			s++;	//Go to next suit
 		}
@@ -54,7 +59,6 @@ public class Deck {
 	
 	public void shuffledHelp() {
 		Deck tempDeck = new Deck();	//Creates a temporary, sorted deck to draw from
-		System.out.print("TECHDECK\n\n" + tempDeck.toString() + "\n\n");	//TODO remove this later yo
 		ArrayList<Card> tempArrL = new ArrayList<Card>();
 	
 		for(int i = 0; i < tempDeck.getDeck().length; i++) {
@@ -76,7 +80,7 @@ public class Deck {
 	}
 	//a getCard method would be smart....
 	
-	//Shuffle	//TODO maybe not in compliance with assignment...
+	//Shuffle
 	public void shuffle() {
 		Deck tempDeck = new Deck(false);	//Creates a temporary, shuffled deck to replace
 		
@@ -86,21 +90,37 @@ public class Deck {
 	}
 	
 	//Pick
-	public Card pick(Deck d) {
-		return d.getDeck()[(int) (Math.random() * d.getDeck().length) + 1]; //TODO Check if this is acceptable
+	public Card pick(Card[] d) {
+		//WHEN SHOULD I COLLAPSE??? IN PICK, IN THE CONSTRUCTOR FOR HANDS, OR IN THETESTER...
+		return d[(int) (Math.random() * d.length) + 1]; 	//!!Issue with +1?
+	}
+	
+	//Collapse
+	public Card[] collapse(Card[] given, int x) {
+		Card[] result = new Card[given.length-1]; //Creates a sorted[I NEED IT TO BE EMPTY) array 1 card smaller than the given
+		//How to get the index of the removed card if it's a random # contained within pick? use .equals()!?
+		for(int i = 0; i < x; i ++) {
+			result[i] = given[i];	//Copies all the cards up to the xth card 
+		}
+		for(int i = x+1; i < given.length; i++) { //Skips the given[x]th card which is being "removed"
+			result[i] = given[i];	//Copies all the cards after the xth card
+		}
+		return result;
 	}
 	
 	//Deal
 	public Deck[] deal(int numHands, int cardsPer) {//numHands, cardsPerHand
 		Deck[] result = new Deck[numHands];
 		
-		//TODO does the order in which the cards are deakt matter?
-		/*while (myDeck.length.length > 0) { //Have to have cards in the deck
-			for(int i = 0; i < numHands; i++) {
-				result[i] = new Deck(cardsPer); 
-			}
-		}*/
-		
+		//TODO does the order in which the cards are dealt matter?
+		if( (numHands * cardsPer) < myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
+			//while (myDeck.length > 0) { //Have to have cards in the deck	
+				for(int i = 0; i < numHands; i++) {
+					result[i] = new Deck(myDeck, cardsPer); //Does not remove cards from selection...
+				//}
+			} 
+		} else 
+			System.out.println("That's too many cards hombre!!!");
 		return result;
 	}
 	
@@ -112,10 +132,10 @@ public class Deck {
 				theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+13].toString() + "\t\t" + myDeck[i+26].toString()
 						+ "\t\t" + myDeck[i+39].toString() + "\n";
 			}
-		} else {	//Unsorted
-			for(int i = 0; i < myDeck.length; i++ ) {	//The assignment only asks for 1 tab, but I'm putting 2 for readability			//This one doesn't i++ boost
+		} else {	//Unsorted	//TODO ISSUE, WHAT IF I ONLY HAVE 2 CARDS PER "DECK" LIKE IN HOLD'EM
+			for(int i = 0; i < myDeck.length; i++ ) {	//The assignment only asks for 1 tab, but I'm putting 2 for readability			
 				theShizzle = theShizzle + myDeck[i++].toString() + "\t\t" + myDeck[i++].toString() + "\t\t" + myDeck[i++].toString() 
-						+ "\t\t" + myDeck[i].toString() + "\n";
+						+ "\t\t" + myDeck[i].toString() + "\n";	//Last card doesn't i++ boost
 			}
 		}		
 		return theShizzle;
