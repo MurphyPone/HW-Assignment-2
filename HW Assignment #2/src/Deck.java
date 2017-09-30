@@ -32,7 +32,7 @@ public class Deck {
 		
 		ArrayList<Card> tempArrL = new ArrayList<Card>();
 		
-		for(int i = 0; i < selection.length; i++) {		//Moves cards from selection to an ArrayList
+		for(int i = 0; i < selection.length; i++) {		//copies cards from selection to an ArrayList
 			tempArrL.add(selection[i]);	
 		}
 		
@@ -40,8 +40,13 @@ public class Deck {
 			Card selectedCard = pick(selection);	//pickedCard var
 			myDeck[i] = selectedCard;		//Puts selected card into new deck
 			//TODO TODO TODO TODO REMOVE selectedCard from myDeck and Collapse myDeck accordingly 
+			
+			for(int j = 0; j < myDeck.length; j++) {	
+				if(myDeck[j].equals(selectedCard)) {	//iterate through myDeck and find the index of the Selected card so it can get removed
+					myDeck = collapse(myDeck, j);	//WHERE DO WE WANT TO REMOVE THE CARD FROM...
+				}
+			}
 		}
-				
 		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
 	}
 	
@@ -103,7 +108,7 @@ public class Deck {
 			result[i] = given[i];	//Copies all the cards up to the xth card 
 		}
 		for(int i = x+1; i < given.length; i++) { //Skips the given[x]th card which is being "removed"
-			result[i] = given[i];	//Copies all the cards after the xth card
+			result[i-1] = given[i];	//Copies all the cards after the xth card //ISSUE HERE 
 		}
 		return result;
 	}
@@ -113,11 +118,9 @@ public class Deck {
 		Deck[] result = new Deck[numHands];
 		
 		//TODO does the order in which the cards are dealt matter?
-		if( (numHands * cardsPer) < myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
-			//while (myDeck.length > 0) { //Have to have cards in the deck	
-				for(int i = 0; i < numHands; i++) {
-					result[i] = new Deck(myDeck, cardsPer); //Does not remove cards from selection...
-				//}
+		if( (numHands * cardsPer) <= myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
+			for(int i = 0; i < numHands; i++) {
+				result[i] = new Deck(myDeck, cardsPer); 
 			} 
 		} else 
 			System.out.println("That's too many cards hombre!!!");

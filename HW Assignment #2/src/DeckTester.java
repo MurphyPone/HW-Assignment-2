@@ -26,13 +26,12 @@ public class DeckTester {
 		Deck sorted = new Deck();
 		Deck mixed = new Deck(false);
 		
-		//Deal Testing
-		Deck[] texasHoldEm = mixed.deal(5, 2);	//Issue with printing decks <4
-		
-		Deck[] stud = mixed.deal(5, 5);
+		//Deal Testing				
+		Deck[] texasHoldEm = mixed.deal(5, 2);	//Issue with printing decks that aren't %4==0 
+		Deck[] stud = mixed.deal(5, 4);
 
 		
-		for(int i = 0; i < texasHoldEm.length; i++) {
+		for(int i = 0; i < stud.length; i++) {
 			System.out.println("5 Card Stud Hand: "+ i + "\n\n" + stud[i].toString());
 		}
 	}

@@ -84,13 +84,12 @@ public class Card implements Comparable<Card> {
 			return 0;
 	}
 	
-	/*
 	public boolean equals(Card c) {
-		return (c.getRank() == this.getRank() && c.getSuit() == this.getSuit() ); //TODO same issue with == v. .equals here.  Returns a primitive right?
+		return (c.getRank() == this.getRank() && c.getSuit() == this.getSuit() ); 
 	}
 	
 	
-	
+	/*
 	 neat but not needed
 	 * //This may not be necessary
 	public int getRankInt(String str) {
