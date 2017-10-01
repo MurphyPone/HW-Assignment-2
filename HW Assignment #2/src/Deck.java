@@ -27,23 +27,23 @@ public class Deck {
 	}
 	
 	//Need to populate with cards from pick....
-	public Deck(Card[] selection, int size) {
-		this.myDeck = new Card[size]; //Creates an array with [size] slots
+	public Deck(Card[] parent, int size) {	
+		this.myDeck = new Card[size]; //Creates an array with [size] slots, size =cardsPer from deal(), will myDeck reference the parent or the new instance...
 		
 		ArrayList<Card> tempArrL = new ArrayList<Card>();
 		
-		for(int i = 0; i < selection.length; i++) {		//copies cards from selection to an ArrayList
-			tempArrL.add(selection[i]);	
+		for(int i = 0; i < parent.length; i++) {		//copies cards from selection to an ArrayList
+			tempArrL.add(parent[i]);	
 		}
 		
 		for(int i = 0; i < size; i++) {
-			Card selectedCard = pick(selection);	//pickedCard var
-			myDeck[i] = selectedCard;		//Puts selected card into new deck
+			Card selectedCard = pick(parent);	//pickedCard var
+			this.myDeck[i] = selectedCard;		//Puts selected card into new deck
 			//TODO TODO TODO TODO REMOVE selectedCard from myDeck and Collapse myDeck accordingly 
 			
 			for(int j = 0; j < myDeck.length; j++) {	
 				if(myDeck[j].equals(selectedCard)) {	//iterate through myDeck and find the index of the Selected card so it can get removed
-					myDeck = collapse(myDeck, j);	//WHERE DO WE WANT TO REMOVE THE CARD FROM...
+					myDeck = collapse(myDeck, j);	//WHERE DO WE WANT TO REMOVE THE CARD FROM... myDeck = parent deck? or a new deck...
 				}
 			}
 		}
