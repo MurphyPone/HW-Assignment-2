@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Deck {
 	//Fields
 	private Card[] myDeck; 
-	private Card topCard;
+	private int topCard;
 	private boolean isSorted; //Worth keeping track of this state for the toString()?
 	
 	//Constructor Lite
@@ -11,7 +11,7 @@ public class Deck {
 		this.myDeck = new Card[52]; //Creates an array with room for 52 cards
 		
 		sortedHelp();
-		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
+		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
 	//Constructor Premium+
@@ -23,17 +23,22 @@ public class Deck {
 		else
 			shuffledHelp();
 		
-		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
+		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
-	//Need to populate with cards from pick....
-	public Deck(Card[] parent, int size) {	
+	//Need to populate with cards fom topCard
+	/*public Deck(Card[] parent, int size) {	
 		this.myDeck = new Card[size]; //Creates an array with [size] slots, size =cardsPer from deal(), will myDeck reference the parent or the new instance...
 		
 		ArrayList<Card> tempArrL = new ArrayList<Card>();
 		
 		for(int i = 0; i < parent.length; i++) {		//copies cards from selection to an ArrayList
 			tempArrL.add(parent[i]);	
+		}
+		//DON'T COLLAPSE HERE, JUST CHANGE TOPCARD AND SET A CARD == null
+		
+		for(int i = 0; i < size; i++) {
+			myDeck[i] = parent[topCard--];
 		}
 		
 		for(int i = 0; i < size; i++) {
@@ -43,11 +48,17 @@ public class Deck {
 			
 			for(int j = 0; j < myDeck.length; j++) {	
 				if(myDeck[j].equals(selectedCard)) {	//iterate through myDeck and find the index of the Selected card so it can get removed
-					myDeck = collapse(myDeck, j);	//WHERE DO WE WANT TO REMOVE THE CARD FROM... myDeck = parent deck? or a new deck...
+					collapse();	//WHERE DO WE WANT TO REMOVE THE CARD FROM... myDeck = parent deck? or a new deck...
 				}
 			}
 		}
-		this.topCard = this.myDeck[myDeck.length-1];	//The top card is the last card
+		this.topCard = myDeck.length-1;	//The top card is the last card
+	}*/
+	
+	public Deck(int numCards) { 
+		myDeck = new Card[numCards];
+		this.topCard = myDeck.length-1;
+		this.isSorted = false;
 	}
 	
 	//Constructor helpers----------------------------------------
@@ -75,7 +86,6 @@ public class Deck {
 			myDeck[i] = tempArrL.get(r);		//myDeck is filled with random pick from the shrinking tempArrL
 			tempArrL.remove(r);		//Removes that card from the tempArrL
 		}
-		
 		this.isSorted = false;
 	}
 	
@@ -83,6 +93,7 @@ public class Deck {
 	public Card[] getDeck() {
 		return myDeck;	//For accessing the the cards
 	}
+
 	//a getCard method would be smart....
 	
 	//Shuffle
@@ -96,39 +107,43 @@ public class Deck {
 	
 	//Pick
 	public Card pick(Card[] d) {
-		//WHEN SHOULD I COLLAPSE??? IN PICK, IN THE CONSTRUCTOR FOR HANDS, OR IN THETESTER...
 		return d[(int) (Math.random() * d.length) + 1]; 	//!!Issue with +1?
+		//COLLAPSE() HERE
 	}
 	
 	//Collapse
-	public Card[] collapse(Card[] given, int x) {
-		Card[] result = new Card[given.length-1]; //Creates a sorted[I NEED IT TO BE EMPTY) array 1 card smaller than the given
-		//How to get the index of the removed card if it's a random # contained within pick? use .equals()!?
-		for(int i = 0; i < x; i ++) {
-			result[i] = given[i];	//Copies all the cards up to the xth card 
+	public void collapse(int x) {	//x = the card that has been picked
+		if(x == topCard) {	//Dealt from the top card
+			myDeck[topCard] = null;
+			topCard--;
+		} else {				//Randomly Picked card
+			for(int i = x; i < topCard-1; i++) { 
+				myDeck[i] = myDeck[i+1];
+			}
+			myDeck[topCard] = null;
+			topCard--;
 		}
-		for(int i = x+1; i < given.length; i++) { //Skips the given[x]th card which is being "removed"
-			result[i-1] = given[i];	//Copies all the cards after the xth card //ISSUE HERE 
-		}
-		return result;
 	}
 	
 	//Deal
 	public Deck[] deal(int numHands, int cardsPer) {//numHands, cardsPerHand
 		Deck[] result = new Deck[numHands];
 		
-		//TODO does the order in which the cards are dealt matter?
 		if( (numHands * cardsPer) <= myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
-			for(int i = 0; i < numHands; i++) {
-				result[i] = new Deck(myDeck, cardsPer); 
-			} 
+			for(int j = 0; j < cardsPer; j++) {	//Deals "clockwise"
+				for(int i = 0; i < numHands; i++ ) {
+					result[i] = new Deck(cardsPer);	//Creates a new Deck
+					result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
+					myDeck[topCard--] = null; 
+				}
+			}
 		} else 
 			System.out.println("That's too many cards hombre!!!");
 		return result;
 	}
 	
 	//toString
-	public String toString() {		//TODO Lookup format specifiers %12s or something
+	public String toString() {		//TODO Lookup format specifiers %12s or something	//ASK ABOUT TOSTRINGING FOR HANDS INSTEAD OF DECKS
 		String theShizzle = "";
 		if(isSorted) {
 			for(int i = 0; i < 13; i++) {

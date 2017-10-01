@@ -46,6 +46,12 @@ public class Card implements Comparable<Card> {
 		this.rank = getRank();
 	}
 	
+	//Constructor Copy 
+	public Card(Card parent) { 
+		suit = parent.suit;
+		rank = parent.rank;
+	}
+	
 	//Constructor helper
 	public boolean isValidRank(int r) {
 		return (r >= 2 && r < 15);
