@@ -26,35 +26,6 @@ public class Deck {
 		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
-	//Need to populate with cards fom topCard
-	/*public Deck(Card[] parent, int size) {	
-		this.myDeck = new Card[size]; //Creates an array with [size] slots, size =cardsPer from deal(), will myDeck reference the parent or the new instance...
-		
-		ArrayList<Card> tempArrL = new ArrayList<Card>();
-		
-		for(int i = 0; i < parent.length; i++) {		//copies cards from selection to an ArrayList
-			tempArrL.add(parent[i]);	
-		}
-		//DON'T COLLAPSE HERE, JUST CHANGE TOPCARD AND SET A CARD == null
-		
-		for(int i = 0; i < size; i++) {
-			myDeck[i] = parent[topCard--];
-		}
-		
-		for(int i = 0; i < size; i++) {
-			Card selectedCard = pick(parent);	//pickedCard var
-			this.myDeck[i] = selectedCard;		//Puts selected card into new deck
-			//TODO TODO TODO TODO REMOVE selectedCard from myDeck and Collapse myDeck accordingly 
-			
-			for(int j = 0; j < myDeck.length; j++) {	
-				if(myDeck[j].equals(selectedCard)) {	//iterate through myDeck and find the index of the Selected card so it can get removed
-					collapse();	//WHERE DO WE WANT TO REMOVE THE CARD FROM... myDeck = parent deck? or a new deck...
-				}
-			}
-		}
-		this.topCard = myDeck.length-1;	//The top card is the last card
-	}*/
-	
 	public Deck(int numCards) { 
 		myDeck = new Card[numCards];
 		this.topCard = myDeck.length-1;
@@ -143,19 +114,26 @@ public class Deck {
 	}
 	
 	//toString
-	public String toString() {		//TODO Lookup format specifiers %12s or something	//ASK ABOUT TOSTRINGING FOR HANDS INSTEAD OF DECKS
+	public String toString() {	
 		String theShizzle = "";
-		if(isSorted) {
-			for(int i = 0; i < 13; i++) {
-				theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+13].toString() + "\t\t" + myDeck[i+26].toString()
-						+ "\t\t" + myDeck[i+39].toString() + "\n";
-			}
-		} else {	//Unsorted	//TODO ISSUE, WHAT IF I ONLY HAVE 2 CARDS PER "DECK" LIKE IN HOLD'EM
-			for(int i = 0; i < myDeck.length; i++ ) {	//The assignment only asks for 1 tab, but I'm putting 2 for readability			
-				theShizzle = theShizzle + myDeck[i++].toString() + "\t\t" + myDeck[i++].toString() + "\t\t" + myDeck[i++].toString() 
-						+ "\t\t" + myDeck[i].toString() + "\n";	//Last card doesn't i++ boost
-			}
-		}		
+		
+		if(myDeck.length == 52) { //Full Deck
+			if(isSorted) {
+				for(int i = 0; i < 13; i++) {
+					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+13].toString() + "\t\t" + myDeck[i+26].toString()
+							+ "\t\t" + myDeck[i+39].toString() + "\n";
+				}
+			} else {	//Unsorted	
+				for(int i = 0; i < myDeck.length; i++ ) {	//The assignment only asks for 1 tab, but I'm putting 2 for readability			
+					theShizzle = theShizzle + myDeck[i++].toString() + "\t\t" + myDeck[i++].toString() + "\t\t" + myDeck[i++].toString() 
+							+ "\t\t" + myDeck[i].toString() + "\n";	//Last card doesn't i++ boost
+				}
+			}		
+		} else {		//Any # of Hands
+			for(int i = 0; i < topCard; i++ )
+				if(myDeck[i] != null )
+					theShizzle = theShizzle + getDeck()[i].toString() + "\n";
+		}
 		return theShizzle;
 	}
 	
