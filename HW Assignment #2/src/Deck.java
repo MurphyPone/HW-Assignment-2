@@ -5,6 +5,7 @@ public class Deck {
 	private Card[] myDeck; 
 	private int topCard;
 	private boolean isSorted; //Worth keeping track of this state for the toString()?
+	private final int THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS = 52;
 	
 	//Constructor Lite
 	public Deck() {
@@ -99,25 +100,32 @@ public class Deck {
 	//Deal
 	public Deck[] deal(int numHands, int cardsPer) {//numHands, cardsPerHand
 		Deck[] result = new Deck[numHands];
+		for(int i = 0; i < numHands; i++ ) {
+			result[i] = new Deck(cardsPer);	//Creates a new Deck
+		}
 		
 		if( (numHands * cardsPer) <= myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
 			for(int j = 0; j < cardsPer; j++) {	//Deals "clockwise"
 				for(int i = 0; i < numHands; i++ ) {
-					result[i] = new Deck(cardsPer);	//Creates a new Deck
 					result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
-					myDeck[topCard--] = null; 
+					myDeck[topCard--] = null;			//Sets the topCard = null since it's been "removed"
+					
 				}
 			}
-		} else 
+		} else {
 			System.out.println("That's too many cards hombre!!!");
+			return null;
+		}
+	
 		return result;
 	}
 	
 	//toString
 	public String toString() {	
+		System.out.println("In decks tostring()" + myDeck.length );
 		String theShizzle = "";
 		
-		if(myDeck.length == 52) { //Full Deck
+		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck
 			if(isSorted) {
 				for(int i = 0; i < 13; i++) {
 					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+13].toString() + "\t\t" + myDeck[i+26].toString()
@@ -145,6 +153,30 @@ public class Deck {
 				same = false;
 		}
 		return same;
+	}
+	//W E W L A D Searching and sorting time------------------------------------------------------------
+	
+	public void selectionSort(Card[] theDeck ) {	//TODO this thing TODO learn it
+	  // Sorts a[0], ..., a[a.length-1] in ascending order
+	  //   using Selection Sort.
+	    for (int n = theDeck.length; n > 1; n--) {
+	    	// Find the index iMax of the largest element
+	    	//   among a[0], ..., a[n-1]:
+	    	int iMax = 0;
+	    	for (int i = 1; i < n; i++) {
+	    		if (theDeck[i].getRank() > theDeck[iMax].getRank()) {
+	    			iMax = i;
+	    		}
+
+	    		// Swap a[iMax] with a[n-1]:
+
+	    		Card cardTemp = theDeck[iMax];
+	    		theDeck[iMax] = theDeck[n-1];
+	    		theDeck[n-1] = cardTemp;
+
+	     	// Decrement n (accomplished by n-- in the for loop).
+	    	}
+		}
 	}
 	
 }
