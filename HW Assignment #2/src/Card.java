@@ -82,12 +82,16 @@ public class Card implements Comparable<Card> {
 	
 	//Comparison------------------------------
 	public int compareTo(Card c) {
-		if(getRank()  > c.getRank()) 
+		if( getSuitInt()  == c.getSuitInt()) {
+			if(getRank() > c.getRank() ) { return 1; } 
+			else if(getRank() < c.getRank()) {return -1; }
+			else { return 0;}
+		} 
+		if( getSuitInt()  > c.getSuitInt()) {
 			return 1;
-		if(getRank() < c.getRank())
+		} else {
 			return -1;
-		else 
-			return 0;
+		}
 	}
 	
 	public boolean equals(Card c) {

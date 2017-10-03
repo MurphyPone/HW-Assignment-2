@@ -24,12 +24,18 @@ public class DeckTester {
 		
 		//Deck Testing
 		Deck sorted = new Deck();
+		Deck mixedDeal = new Deck(false);
 		Deck mixed = new Deck(false);
+
+		System.out.println(sorted);
 		
 		//Deal Testing				
-		Deck[] texasHoldEm = mixed.deal(5, 2);	//Issue with printing decks that aren't %4==0 
-		Deck[] stud = mixed.deal(4, 5);
+		Deck[] texasHoldEm = mixedDeal.deal(5, 2);	//Issue with printing decks that aren't %4==0 
+		Deck[] stud = mixedDeal.deal(4, 5);
 		
-		System.out.println(mixed.toString());
+		System.out.print("BEFORE THE SORT: \n" + mixed.toString());
+		mixed.selectionSort();
+		System.out.print("\nAFTER THE SORT: \n" + mixed.toString());
+
 	}
 }

@@ -124,7 +124,7 @@ public class Deck {
 	public String toString() {	
 		String theShizzle = "";
 		
-		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS-1) { //Full Deck
+		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck
 			if(isSorted) {
 				for(int i = 0; i < THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4; i++) {
 					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4].toString() 
@@ -158,15 +158,13 @@ public class Deck {
 	//W E W L A D Searching and sorting time------------------------------------------------------------
 	
 	public void selectionSort() {	//TODO this thing TODO learn it
-	  // Sorts a[0], ..., a[a.length-1] in ascending order
-	  //   using Selection Sort.
-	    for (int n = myDeck.length; n > 1; n--) {
-	    		// Find the index iMax of the largest element
-	    		//   among a[0], ..., a[n-1]:
-		    	int iMax = 0;
+	  // Sorts a[0], ..., a[a.length-1] in ascending order using Selection Sort.
+	    for (int n = myDeck.length; n > 1; n--) {		//Iterates backwards, stops before the last (first) element bc it should be in place by then
+	    		// Find the index iMax of the largest element among a[0], ..., a[n-1]:
+		    	int iMax = 0;			//"Biggest" element is the first --no competition :p
 		    	for (int i = 1; i < n; i++) {
-		    		if (myDeck[i].getRank() > myDeck[iMax].getRank()) {
-		    			iMax = i;
+		    		if (myDeck[i].compareTo(myDeck[iMax]) == 1 ) { //Both the rank and suit are greater than the current iMax
+		    			iMax = i;	//If greater, then new high score
 		    		}
 	
 		    		// Swap a[iMax] with a[n-1]:
@@ -178,6 +176,6 @@ public class Deck {
 		     	// Decrement n (accomplished by n-- in the for loop).
 		    	}
 		}
+	    this.isSorted = true; //TODO FOR WHATEVER REASON, IF I CHANGE THIS TO TRUE, IT PRINTS WACKASF
 	}
-	
 }
