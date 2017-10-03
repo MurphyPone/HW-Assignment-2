@@ -29,10 +29,7 @@ public class DeckTester {
 		//Deal Testing				
 		Deck[] texasHoldEm = mixed.deal(5, 2);	//Issue with printing decks that aren't %4==0 
 		Deck[] stud = mixed.deal(4, 5);
-
 		
-		for(int i = 0; i < stud.length; i++) {
-			System.out.println("5 Card Stud Hand: "+ i + "\n\n" + stud[i].toString());
-		}
+		System.out.println(mixed.toString());
 	}
 }

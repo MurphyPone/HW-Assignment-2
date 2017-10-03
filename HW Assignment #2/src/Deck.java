@@ -9,7 +9,7 @@ public class Deck {
 	
 	//Constructor Lite
 	public Deck() {
-		this.myDeck = new Card[52]; //Creates an array with room for 52 cards
+		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with room for 52 cards
 		
 		sortedHelp();
 		this.topCard = myDeck.length-1;	//The top card is the last card
@@ -17,7 +17,7 @@ public class Deck {
 	
 	//Constructor Premium+
 	public Deck(boolean notShuffled) {
-		this.myDeck = new Card[52]; //Creates an array with 52 slots
+		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with 52 slots
 		
 		if(notShuffled)
 			sortedHelp();
@@ -122,14 +122,15 @@ public class Deck {
 	
 	//toString
 	public String toString() {	
-		System.out.println("In decks tostring()" + myDeck.length );
 		String theShizzle = "";
 		
-		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck
+		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS-1) { //Full Deck
 			if(isSorted) {
-				for(int i = 0; i < 13; i++) {
-					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+13].toString() + "\t\t" + myDeck[i+26].toString()
-							+ "\t\t" + myDeck[i+39].toString() + "\n";
+				for(int i = 0; i < THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4; i++) {
+					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4].toString() 
+							+ "\t\t" + myDeck[i+THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2].toString() + "\t\t" + 
+							myDeck[i+(THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2)+
+							       (THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4)].toString() + "\n";
 				}
 			} else {	//Unsorted	
 				for(int i = 0; i < myDeck.length; i++ ) {	//The assignment only asks for 1 tab, but I'm putting 2 for readability			
@@ -156,26 +157,26 @@ public class Deck {
 	}
 	//W E W L A D Searching and sorting time------------------------------------------------------------
 	
-	public void selectionSort(Card[] theDeck ) {	//TODO this thing TODO learn it
+	public void selectionSort() {	//TODO this thing TODO learn it
 	  // Sorts a[0], ..., a[a.length-1] in ascending order
 	  //   using Selection Sort.
-	    for (int n = theDeck.length; n > 1; n--) {
-	    	// Find the index iMax of the largest element
-	    	//   among a[0], ..., a[n-1]:
-	    	int iMax = 0;
-	    	for (int i = 1; i < n; i++) {
-	    		if (theDeck[i].getRank() > theDeck[iMax].getRank()) {
-	    			iMax = i;
-	    		}
-
-	    		// Swap a[iMax] with a[n-1]:
-
-	    		Card cardTemp = theDeck[iMax];
-	    		theDeck[iMax] = theDeck[n-1];
-	    		theDeck[n-1] = cardTemp;
-
-	     	// Decrement n (accomplished by n-- in the for loop).
-	    	}
+	    for (int n = myDeck.length; n > 1; n--) {
+	    		// Find the index iMax of the largest element
+	    		//   among a[0], ..., a[n-1]:
+		    	int iMax = 0;
+		    	for (int i = 1; i < n; i++) {
+		    		if (myDeck[i].getRank() > myDeck[iMax].getRank()) {
+		    			iMax = i;
+		    		}
+	
+		    		// Swap a[iMax] with a[n-1]:
+	
+		    		Card cardTemp = myDeck[iMax];
+		    		myDeck[iMax] = myDeck[n-1];
+		    		myDeck[n-1] = cardTemp;
+	
+		     	// Decrement n (accomplished by n-- in the for loop).
+		    	}
 		}
 	}
 	
