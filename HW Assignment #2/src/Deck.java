@@ -72,8 +72,9 @@ public class Deck {
 	public void shuffle() {
 		Deck tempDeck = new Deck(false);	//Creates a temporary, shuffled deck to replace
 		
-		for(int i = 0; i < tempDeck.getDeck().length; i++) {	//Needs a separate loop so that tempArrL gets filled
+		for(int i = 0; i < myDeck.length; i++) {	//Needs a separate loop so that tempArrL gets filled
 			myDeck[i] = tempDeck.getDeck()[i];		//myDeck is filled with random pick from the shrinking tempArrL
+			tempDeck.collapse(i);				//Removes selected card from tempDeck so that It can't be added twice
 		}
 	}
 	
@@ -189,17 +190,17 @@ public class Deck {
         int size2 = r - m;
  
         /* Create temp arrays */
-        Card left[] = new Card[size1];
-        Card right[] = new Card[size2];
+        Card[] left = new Card[size1];
+        Card[] right = new Card[size2];
  
         /*Copy data to temp arrays*/
         for (int i = 0; i < size1; ++i) {
-        	System.out.println("Deck[" + i +"] = " + deck[l + i]);
+        //	System.out.println("Deck[" + i +"] = " + deck[l + i]);
             left[i] = deck[l + i];
         }
         for (int j = 0; j < size2; ++j) {
-        	System.out.println("Deck[" + j +"] = " + deck[m + 1 + j]);
-            right[j] = deck[m + 1 + j];	//TODO ERROR HERE
+        //	System.out.println("Deck[" + j +"] = " + deck[m + 1 + j]);
+            right[j] = deck[m + 1 + j];	//TODO ERROR HERE		
         }
  
         /* Merge the temp arrays */

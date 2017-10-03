@@ -25,15 +25,16 @@ public class DeckTester {
 		//Deck Testing
 		Deck sorted = new Deck();
 		Deck mixedDeal = new Deck(false);
-		Deck mixed = new Deck(false);
+		Deck forMerge = new Deck(6);
+		forMerge.shuffle();
 		
 		//Deal Testing				
 		Deck[] texasHoldEm = mixedDeal.deal(5, 2);	//Issue with printing decks that aren't %4==0 
 		Deck[] stud = mixedDeal.deal(4, 5);
 		
-		System.out.print("BEFORE THE SORT: \n" + mixed.toString());
-		mixed.mergeSort(mixed.getDeck(), 0, mixed.getDeck().length);
-		System.out.print("\nAFTER THE SORT: \n" + mixed.toString());
+		System.out.print("BEFORE THE SORT: \n" + forMerge.toString());
+		forMerge.mergeSort(forMerge.getDeck(), 0, forMerge.getDeck().length);
+		System.out.print("\nAFTER THE SORT: \n" + forMerge.toString());
 
 	}
 }
