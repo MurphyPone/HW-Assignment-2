@@ -109,7 +109,6 @@ public class Deck {
 				for(int i = 0; i < numHands; i++ ) {
 					result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
 					myDeck[topCard--] = null;			//Sets the topCard = null since it's been "removed"
-					
 				}
 			}
 		} else {
@@ -179,52 +178,58 @@ public class Deck {
 	    //TODO FOR WHATEVER REASON, IF I CHANGE THIS TO TRUE, IT PRINTS WACKASF
 	}
 	
+	//------------------------------------------------------------
+	
 	// Merges two subarrays of arr[].
     // First subarray is arr[l..m]
     // Second subarray is arr[m+1..r]
-    void merge(int l, int m, int r) { //http://www.geeksforgeeks.org/merge-sort/
+    void merge(Card[] deck, int l, int m, int r) {
         // Find sizes of two subarrays to be merged
-        int n1 = m - l + 1;
-        int n2 = r - m;
+        int size1 = m - l + 1;
+        int size2 = r - m;
  
         /* Create temp arrays */
-        Card[] L = new Card[n1];
-        Card[] R = new Card[n2];
+        Card left[] = new Card[size1];
+        Card right[] = new Card[size2];
  
         /*Copy data to temp arrays*/
-        for (int i=0; i<n1; ++i)
-            L[i] = myDeck[l + i];
-        for (int j=0; j<n2; ++j)
-            R[j] = myDeck[m + 1+ j];
+        for (int i = 0; i < size1; ++i) {
+        	System.out.println("Deck[" + i +"] = " + deck[l + i]);
+            left[i] = deck[l + i];
+        }
+        for (int j = 0; j < size2; ++j) {
+        	System.out.println("Deck[" + j +"] = " + deck[m + 1 + j]);
+            right[j] = deck[m + 1 + j];	//TODO ERROR HERE
+        }
  
         /* Merge the temp arrays */
- 
-        // Initial indexes of first and second subarrays
-        int i = 0, j = 0;
- 
-        // Initial index of merged subarry array
-        int k = l;
-        while (i < n1 && j < n2) {
-            if (L[i].compareTo(R[j]) == -1) {
-            		myDeck[k] = L[i];
+        int i = 0, j = 0; 	// Initial indexes of first and second subarrays
+
+        //Compares each index of each sorted array L and R, 
+        //then incrememnts the index of which array has the higher card, and inserts it into deck[]
+    
+        int k = l;  // Initial index of merged subarry array
+        while (i < size1 && j < size2) {
+            if (left[i].compareTo(right[j]) <= 1) {//(left[i] <= right[j]
+                deck[k] = left[i];
                 i++;
             } else {
-            		myDeck[k] = R[j];
+                deck[k] = right[j];
                 j++;
             }
             k++;
         }
  
         /* Copy remaining elements of L[] if any */
-        while (i < n1) {
-        		myDeck[k] = L[i];
+        while (i < size1) {
+            deck[k] = left[i];
             i++;
             k++;
         }
  
         /* Copy remaining elements of R[] if any */
-        while (j < n2) {
-        		myDeck[k] = R[j];
+        while (j < size2) {
+            deck[k] = right[j];
             j++;
             k++;
         }
@@ -232,17 +237,18 @@ public class Deck {
  
     // Main function that sorts arr[l..r] using
     // merge()
-    void mergeSort(int l, int r) {
+    void mergeSort(Card[] deck, int l, int r) {
         if (l < r) {
             // Find the middle point
             int m = (l+r)/2;
  
             // Sort first and second halves
-            mergeSort(l, m);
-            mergeSort(m+1, r);
+            mergeSort(deck, l, m);
+            mergeSort(deck, m+1, r);
  
             // Merge the sorted halves
-            merge(l, m, r);
+            merge(deck, l, m, r);
         }
     }
+	 
 }
