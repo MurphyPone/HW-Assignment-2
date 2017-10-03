@@ -26,6 +26,7 @@ public class DeckTester {
 		Deck sorted = new Deck();
 		Deck mixedDeal = new Deck(false);
 		Deck mixed = new Deck(false);
+		
 
 		System.out.println(sorted);
 		
@@ -34,7 +35,7 @@ public class DeckTester {
 		Deck[] stud = mixedDeal.deal(4, 5);
 		
 		System.out.print("BEFORE THE SORT: \n" + mixed.toString());
-		mixed.selectionSort();
+		mixed.mergeSort(0, mixed.getDeck().length);
 		System.out.print("\nAFTER THE SORT: \n" + mixed.toString());
 
 	}
