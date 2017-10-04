@@ -1,21 +1,53 @@
-import java.util.ArrayList;
+/**
+ * Class Description: This class represents a deck of playing card and includes multiple methods emulating common card moves including:
+ * 						1. Shuffling a deck of cards 
+ * 						2. Picking a random card from a deck
+ * 						3. Dealing several hands (smaller decks) 
+ * 						
+ * 					Other non traditional card manipulations include:
+ * 						1. Selection sorting
+ * 						2. Merge sorting
+ * 						3. Array "collapsing"
+ * 				
+ * @author MurphyP1
+ * @date 10/3/17
+ */
+
+import java.util.*;
 
 public class Deck {
 	//Fields
-	private Card[] myDeck; 
-	private int topCard;
-	private boolean isSorted; //Worth keeping track of this state for the toString()?
-	private final int THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS = 52;
+	private Card[] myDeck; //Array which stores individual Cards
+	private int topCard;		//the index of the last non-null card within the deck
+	private boolean isSorted; //No longer needed, but used for determining how to build the toString 
+	private final int THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS = 52;	//There is no reason for this variable to exist 
 	
-	//Constructor Lite
+	/**
+	 * The default constructor for a Deck object which creates a sorted deck of 52 Cards
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method Deck
+	 * 
+	 * @return a sorted Deck of 52 Cards
+	 */
 	public Deck() {
 		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with room for 52 cards
-		
 		sortedHelp();
 		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
-	//Constructor Premium+
+	/**
+	 * The premium constructor for a Deck object which creates a deck, sorted or unsorted, of 52 Cards
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method Deck
+	 * 
+	 * @param notShuffled a boolean value to determine whether or not the deck should be sorted
+	 * 
+	 * @return a Deck of 52 Cards shuffled according to the notShuffled argument
+	 */
 	public Deck(boolean notShuffled) {
 		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with 52 slots
 		
@@ -27,14 +59,34 @@ public class Deck {
 		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
-	//Constructor for Deal
+	/**
+	 * The wimpy constructor for a Deck object which creates an empty deck, with room for a variable amount of Cards
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method Deck
+	 * 
+	 * @param numCards the size of the Deck 
+	 * 
+	 * @return a Deck with a variable amount of Cards 
+	 */
 	public Deck(int numCards) { 
 		myDeck = new Card[numCards];
 		this.topCard = myDeck.length-1;
 		this.isSorted = false;
 	}
 	
-	//Constructor helpers----------------------------------------
+	//Constructor helpers---------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * A method for adding Cards into the deck according to Suit and Rank hierarchy
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method sortedHelp
+	 * 
+	 * @return void
+	 */
 	public void sortedHelp() {
 		int s = 0;	//Suit counter
 		while (s < 4 ) {		//Do 4x 
@@ -46,6 +98,15 @@ public class Deck {
 		this.isSorted = true;
 	}
 	
+	/**
+	 * A method for adding Cards into the Deck in random order
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method shuffledHelp
+	 * 
+	 * @return void
+	 */
 	public void shuffledHelp() {
 		Deck tempDeck = new Deck();	//Creates a temporary, sorted deck to draw from
 		ArrayList<Card> tempArrL = new ArrayList<Card>();
@@ -62,14 +123,30 @@ public class Deck {
 		this.isSorted = false;
 	}
 	
-	//Getters
+	//Getters -------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * A method for fetching the array of Cards within a Deck
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method getDeck
+	 * 
+	 * @return Card[] the array of Cards, the principle part of the Deck
+	 */
 	public Card[] getDeck() {
 		return myDeck;	//For accessing the the cards
 	}
-
-	//a getCard method would be smart....
 	
-	//Shuffle
+	/**
+	 * A method for rearranging the Cards within a Deck
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method shuffle
+	 * 
+	 * @return void
+	 */
 	public void shuffle() {
 		Deck tempDeck = new Deck(false);	//Creates a temporary, shuffled deck to replace
 		
@@ -77,20 +154,40 @@ public class Deck {
 			myDeck[i] = tempDeck.getDeck()[i];		//myDeck is filled with random pick from the shrinking tempArrL
 			tempDeck.collapse(i);				//Removes selected card from tempDeck so that It can't be added twice
 		}
+		isSorted = false;
 	}
 	
-	//Pick
+	/**
+	 * A method for fetching a random Card within a given Deck of Cards
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method pick
+	 * 
+	 * @param d an array of Cards to draw from
+	 * 
+	 * @return a random card from the given array of Cards
+	 */
 	public Card pick(Card[] d) {
-		return d[(int) (Math.random() * d.length) + 1]; 	//!!Issue with +1?
-		//COLLAPSE() HERE
+		return d[(int) (Math.random() * d.length) + 1]; 	
 	}
 	
-	//Collapse
+	/**
+	 * A method for adjusting contents of a Deck for other interactions such as picking and dealing, but probably not good after shuffling
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method collapse
+	 * 
+	 * @param x the index of array of Cards to collapse from
+	 * 
+	 * @return void
+	 */
 	public void collapse(int x) {	//x = the card that has been picked
 		if(x == topCard) {	//Dealt from the top card
 			myDeck[topCard] = null;
 			topCard--;
-		} else {				//Randomly Picked card
+		} else {				//Randomly Picked card --might not even be needed..
 			for(int i = x; i < topCard-1; i++) { 
 				myDeck[i] = myDeck[i+1];
 			}
@@ -99,8 +196,19 @@ public class Deck {
 		}
 	}
 	
-	//Deal
-	public Deck[] deal(int numHands, int cardsPer) {//numHands, cardsPerHand
+	/**
+	 * A method for creating smaller hands (Decks) from the master Deck
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method deal
+	 * 
+	 * @param numHands the number of new Decks to create
+	 * @param cardsPer the number of Cards to be removed from the master Deck and added to each hand
+	 * 
+	 * @return an array of Decks (hands)
+	 */
+	public Deck[] deal(int numHands, int cardsPer) {
 		Deck[] result = new Deck[numHands];
 		for(int i = 0; i < numHands; i++ ) {
 			result[i] = new Deck(cardsPer);	//Creates a new Deck
@@ -121,15 +229,23 @@ public class Deck {
 		return result;
 	}
 	
-	//toString
+	/**
+	 * A method for printing the values of the individual Cards within a Deck whose ugliness can be attributed to "Good programming conventions"
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method toString
+	 * 
+	 * @return a String, of 4 sorted/unsorted columns if called by a full Deck, or one column if called by an abnormal sized Deck
+	 */
 	public String toString() {	
 		String theShizzle = "";
-		
-		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck
+		//TODO CHECK FOR NULL CARDS?
+		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck = 52 (duh)
 			if(isSorted) {
 				for(int i = 0; i < THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4; i++) {
 					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4].toString() 
-							+ "\t\t" + myDeck[i+THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2].toString() + "\t\t" + 
+							+ "\t\t" + myDeck[i+(THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2)].toString() + "\t\t" + 
 							myDeck[i+(THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2)+
 							       (THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4)].toString() + "\n";
 				}
@@ -139,7 +255,7 @@ public class Deck {
 							+ "\t\t" + myDeck[i].toString() + "\n";	//Last card doesn't i++ boost
 				}
 			}		
-		} else {		//Any # of Hands
+		} else {		//Any # of Cards
 			for(int i = 0; i < topCard; i++ )
 				if(myDeck[i] != null )
 					theShizzle = theShizzle + getDeck()[i].toString() + "\n";
@@ -147,17 +263,37 @@ public class Deck {
 		return theShizzle;
 	}
 	
-	//.equals
+	/**
+	 * A method for comparing Decks of Cards according to the individual cards within each
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method equals
+	 * 
+	 * @return true if all the cards in each are identical 
+	 */
 	public boolean equals(Deck other) {
 		boolean same = true;
-		for(int i = 0; i < myDeck.length; i++) {
-			if(!myDeck[i].equals(other.getDeck()[i])) 
-				same = false;
-		}
-		return same;
+		if(myDeck.length == other.getDeck().length) {	//If they're the same size, do further investigating
+			for(int i = 0; i < myDeck.length; i++) {
+				if(!myDeck[i].equals(other.getDeck()[i])) //Compares individual Cards
+					same = false;
+			}
+			return same;
+		}else return false;
 	}
-	//W E W L A D Searching and sorting time------------------------------------------------------------
+	//G A D Z O O K S  Searching and sorting time------------------------------------------------------------
 	
+	
+	/**
+	 * A method for sorting a Decks linearly
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method selectionSort
+	 * 
+	 * @return void
+	 */
 	public void selectionSort() {	//TODO this thing TODO learn it
 	  // Sorts a[0], ..., a[a.length-1] in ascending order using Selection Sort.
 	    for (int n = myDeck.length; n > 1; n--) {		//Iterates backwards, stops before the last (first) element bc it should be in place by then
@@ -177,80 +313,87 @@ public class Deck {
 		     	// Decrement n (accomplished by n-- in the for loop).
 		    	}
 		}
-	    //TODO FOR WHATEVER REASON, IF I CHANGE THIS TO TRUE, IT PRINTS WACKASF
 	}
 	
-	//------------------------------------------------------------
+	//MERGE ------------------------------------------------------------
 	
-	// Merges two subarrays of arr[].
-    // First subarray is arr[l..m]
-    // Second subarray is arr[m+1..r]
-    void merge(Card[] deck, int l, int m, int r) {
-        // Find sizes of two subarrays to be merged
-        int size1 = m - l + 1;
-        int size2 = r - m;
- 
-        /* Create temp arrays */
-        Card[] left = new Card[size1];
-        Card[] right = new Card[size2];
- 
-        /*Copy data to temp arrays*/
-        for (int i = 0; i < size1; ++i) {
-        //	System.out.println("Deck[" + i +"] = " + deck[l + i]);
-            left[i] = deck[l + i];
-        }
-        for (int j = 0; j < size2; ++j) {
-        //	System.out.println("Deck[" + j +"] = " + deck[m + 1 + j]);
-            right[j] = deck[m + 1 + j];	//TODO ERROR HERE		
-        }
- 
-        /* Merge the temp arrays */
-        int i = 0, j = 0; 	// Initial indexes of first and second subarrays
-
-        //Compares each index of each sorted array L and R, 
-        //then incrememnts the index of which array has the higher card, and inserts it into deck[]
+	/**
+	 * A helper method for comparing and combining subdivided arrays of Cards (This is an insufficient understanding of the mergeSort)
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method merge
+	 * 
+	 * @param deck an array of Cards
+	 * @param l an integer representing the index of the left bound of the  deck
+	 * @param m an integer representing the index of the middle of the deck
+	 * @param r and integer representing the index of the right bound of the deck
+	 * 
+	 * @return void
+	 */
     
-        int k = l;  // Initial index of merged subarry array
-        while (i < size1 && j < size2) {
-            if (left[i].compareTo(right[j]) <= 1) {//(left[i] <= right[j]
-                deck[k] = left[i];
-                i++;
-            } else {
-                deck[k] = right[j];
-                j++;
-            }
-            k++;
-        }
- 
-        /* Copy remaining elements of L[] if any */
-        while (i < size1) {
-            deck[k] = left[i];
-            i++;
-            k++;
-        }
- 
-        /* Copy remaining elements of R[] if any */
-        while (j < size2) {
-            deck[k] = right[j];
-            j++;
-            k++;
-        }
+    /**
+	 * A recursive method for adjusting setting up calls to merge to sort Decks all speedy-like
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method mergeSort
+	 * 
+	 * @param deck an array of Cards
+	 * @param l an integer representing the index of the left bound of the  deck
+	 * @param r and integer representing the index of the right bound of the deck
+	 * 
+	 * @return void
+	 */
+    
+    Card[] temp; //Whatchu doin out herE? 
+    				//idk, sir, sorry! 
+    void mergeSort(Card[] a ) {	// sorts a[0],..., a[a.length-1] in ascending order
+    		int n = a.length;
+    		temp = new Card[n];
+    		recursiveSort(a, 0, n-1);
+    		isSorted = true;
     }
- 
-    // Main function that sorts arr[l..r] using
-    // merge()
-    void mergeSort(Card[] deck, int l, int r) {
-        if (l < r) {
-            // Find the middle point
-            int m = (l+r)/2;
- 
-            // Sort first and second halves
-            mergeSort(deck, l, m);
-            mergeSort(deck, m+1, r);
- 
-            // Merge the sorted halves
-            merge(deck, l, m, r);
-        }
-    }
+    
+    void recursiveSort(Card[] a, int from, int to) {	//Recursive heler: a[from]...a[to]
+	    	if(to-from < 2) {	//Base case for 1 or 2 elements
+	    		if(to > from && a[to].compareTo(a[from]) == -1) {	///Ehhh
+	    			Card aTemp = a[to]; //Swap a[to] and a[from]
+	    			a[to] = a[from];
+	    			a[from] = aTemp;
+	    		}
+	    } else { //recursive case
+    			int middle = (from + to) / 2;
+    			recursiveSort(a, from, middle);
+    			recursiveSort(a, middle + 1, to);
+    			merge(a,from, middle, to);
+	    }	
+    } 
 	 
+    void merge(Card[] a, int from, int middle, int to ) {		//merges a[from]...a[middle] and a[middle]...a[to]
+	    	int i = from;
+	    	int j = middle + 1;
+	    int	k = from;
+	    
+	    while( i <= middle && j <= to) {	//While both arrays have elements left unprocessed:
+	    		if(a[i].compareTo(a[j]) == -1 ) { 
+	    			temp[k] = a[i++];	//WHAT IS TEMP
+	    		} else {
+	    			temp[k] = a[j++];
+	    		}
+	    		k++;
+	    }
+	    
+	    while(i <= middle) {	//Copy the tail of the fist half, if any, into temp:
+		    	temp[k++] = a[i++];
+	    }
+	    
+	    while(j<= to) {	//Copy tail of second hald, if any, into temp:
+		    	temp[k++] = a[j++];
+	    }
+	    
+	    for(k = from; k <= to; k++) {	//Copy temp back to a[]
+	    		a[k] = temp[k];
+	    }
+    }
 }

@@ -4,7 +4,7 @@ public class DeckTester {
 	public static void main(String[] args) {
 		
 	//Card Testing
-		Card badCard = new Card(3, -8 );		//This is the control for a bad creation
+		/*Card badCard = new Card(3, -8 );		//This is the control for a bad creation
 		System.out.println("Bad Card:" + badCard);
 		
 		Card one = new Card();					//1st Constructor (random)
@@ -21,26 +21,26 @@ public class DeckTester {
 		
 		Card five = new Card(2, "Ace");			//5th Constructor 
 		System.out.println("5: " + five);
+	*/
+		
 		
 		/*//CardComparator Testing
 		CardComparator comp = new CardComparator();
 		System.out.println(comp.equals(aD, aD) );
 		*/
 		
-		/*Deck Testing
+		//Deck Testing
 		Deck sorted = new Deck();
 		Deck mixedDeal = new Deck(false);
-		Deck forMerge = new Deck(6);
-		forMerge.shuffle();
+		Deck forMerge = new Deck(false);
 		
 		//Deal Testing				
 		Deck[] texasHoldEm = mixedDeal.deal(5, 2);	//Issue with printing decks that aren't %4==0 
 		Deck[] stud = mixedDeal.deal(4, 5);
 		
 		System.out.print("BEFORE THE SORT: \n" + forMerge.toString());
-		forMerge.mergeSort(forMerge.getDeck(), 0, forMerge.getDeck().length);
+		forMerge.mergeSort(forMerge.getDeck()) ;
 		System.out.print("\nAFTER THE SORT: \n" + forMerge.toString());
-		*/
 
 	}
 }

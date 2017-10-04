@@ -1,5 +1,5 @@
 /**
- * Class Description: 	This class represents a single playing card and handles how cards should be compared to each other.
+ * Class Description: This class represents a single playing card and handles how cards should be compared to each other.
  * @author MurphyP1
  * @date 10/3/17
  */
@@ -144,7 +144,7 @@ public class Card implements Comparable<Card> {
 	//Constructor helpers---------------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 * A helped method which determines if the rank value a user passes is valid
+	 * A helper method which determines if the rank value a user passes is valid
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -159,7 +159,7 @@ public class Card implements Comparable<Card> {
 	}
 	
 	/**
-	 * A helped method which determines if the rank value a user passes is valid
+	 * A helper method which determines if the rank value a user passes is valid
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -180,7 +180,7 @@ public class Card implements Comparable<Card> {
 	}
 	
 	/**
-	 * A helped method which determines if the suit value a user passes is valid
+	 * A helper method which determines if the suit value a user passes is valid
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -194,7 +194,7 @@ public class Card implements Comparable<Card> {
 		return (s >= 0 && s < 4);
 	}
 	/**
-	 * A helped method which determines if the suit value a user passes is valid
+	 * A helper method which determines if the suit value a user passes is valid
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -215,7 +215,7 @@ public class Card implements Comparable<Card> {
 	}
 	
 	/**
-	 * A helped method which converts a string to its corresponding suit integer value
+	 * A helper method which converts a string to its corresponding suit integer value
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -235,7 +235,7 @@ public class Card implements Comparable<Card> {
 	}
 	
 	/**
-	 * A helped method which converts a string to its corresponding rank integer value
+	 * A helper method which converts a string to its corresponding rank integer value
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -261,35 +261,81 @@ public class Card implements Comparable<Card> {
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
-	 * @method getsuit
+	 * @method getSuit
 	 * 
-	 * @param r the string to convert to an integer
-	 * 
-	 * @return the index of the rank within the final array of rank strings, or defaults to 2 if invalid
+	 * @return the String value which corresponds to the integer suit value
 	 */ 
 	public String getSuit() {	
-		return suits[this.suit];	//Assignment says this needs to be in string form
+		return suits[this.suit];	
 	}
 	
+	/**
+	 * A method which returns the integer value of a Card's rank
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method getRank
+	 * 
+	 * @return the integer value which corresponds to the suit value
+	 */ 
 	public int getRank() {
 		return this.rank; 
 	}
 	
-	//Alt-Getters------------------------------
+	//Alternative Getters------------------------------
+	
+	/**
+	 * A method which returns the string value of a Card's rank
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method getRankStr
+	 * 
+	 * @return the string value which corresponds to the Card's integer value
+	 */ 
 	public String getRankStr() {
 		return ranks[this.rank-2];	//rank = 2 --> "two" == ranks[0]
 	}	
 	
+	/**
+	 * A method which returns the integer value of a Card's suit
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method getSuitInt
+	 * 
+	 * @return the integer value which corresponds to the Card's suit
+	 */ 
 	public int getSuitInt() {
 		return this.suit;
 	}
 	
+	/**
+	 * A method which returns the string value of a Card's rank and suit
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method toString
+	 * 
+	 * @return the string value which corresponds to the Card's rank suit
+	 */ 
 	//toString------------------------------
 		public String toString() {
 			return getRankStr() + " of " + getSuit(); //getRankStr() is causing problems
 		}
 	
 	//Comparison------------------------------
+	/**
+	 * A method which compares two Cards to one another according to suit and THEN rank
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method compareTo
+	 * 
+	 * @param c a Card to be compared to the main Card
+	 * 
+	 * @return an integer according to the difference from the Card and another Card
+	 */ 
 	public int compareTo(Card c) {
 		if( getSuitInt()  == c.getSuitInt()) {
 			if(getRank() > c.getRank() ) { return 1; } 
@@ -303,6 +349,17 @@ public class Card implements Comparable<Card> {
 		}
 	}
 	
+	/**
+	 * A method which compares two Cards to one another according to suit and  rank
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method equals
+	 * 
+	 * @param c a Card to be compared to the main Card
+	 * 
+	 * @return true if both Cards' suit and rank are identical
+	 */ 
 	public boolean equals(Card c) {
 		return (c.getRank() == this.getRank() && c.getSuit() == this.getSuit() ); 
 	}
