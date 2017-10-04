@@ -27,6 +27,7 @@ public class Deck {
 		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
+	//Constructor for Deal
 	public Deck(int numCards) { 
 		myDeck = new Card[numCards];
 		this.topCard = myDeck.length-1;
