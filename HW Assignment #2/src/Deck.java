@@ -335,7 +335,7 @@ public class Deck {
     				//idk, sir, sorry! 
     void mergeSort(Card[] a ) {	// sorts a[0],..., a[a.length-1] in ascending order
     		int n = a.length;
-    		temp = new Card[n];
+    		temp = new Card[n];//Replace with myDeck?
     		recursiveSort(a, 0, n-1);
     		isSorted = true;
     }
