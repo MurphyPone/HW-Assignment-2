@@ -21,6 +21,7 @@ public class Deck {
 	private int topCard;		//the index of the last non-null card within the deck
 	private boolean isSorted; //No longer needed, but used for determining how to build the toString 
 	private final int THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS = 52;	//There is no reason for this variable to exist 
+	private static Card[] temp; //inefficient but necessary?
 	
 	/**
 	 * The default constructor for a Deck object which creates a sorted deck of 52 Cards
@@ -285,7 +286,7 @@ public class Deck {
 		}else return false;
 	}
 	//G A D Z O O K S  Searching and sorting time------------------------------------------------------------
-	
+	/* SIGNIFICANT HELP FROM TEXTBOOK */
 	
 	/**
 	 * A method for sorting a Decks linearly
@@ -330,9 +331,6 @@ public class Deck {
 	 * 
 	 * @return void
 	 */
-    
-    static Card[] temp; //Whatchu doin out herE? 
-    				//idk, sir, sorry! 
     void mergeSort(Card[] a ) {	// sorts a[0],..., a[a.length-1] in ascending order
     		int n = a.length;
     		temp = new Card[n];//Replace with myDeck?
