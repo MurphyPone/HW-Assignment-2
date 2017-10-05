@@ -1,0 +1,42 @@
+Card Class
+	Has master values to verify/convert suit and rank values from Strings to ints
+
+	Constructors need to accept Strings and integers for values
+	
+	Method to verify that a rank is valid 
+	Method to verify that a suit is valid 
+	
+	Method to convert Strings to integers for suits
+	Method to convert integers to Strings for suits
+	
+	Method to convert Strings to integers for ranks
+	Method to convert integers to Strings for rank
+	
+	Method to compare two cards according to rank and suit
+	
+Card Comparator
+	.equals checks suit and rank values, returns true if they're both the same
+	.compareTo gets the difference between ranks and returns -1,0,1 according to card1-card2
+	
+	
+Deck Class
+	is composed of an array of cards
+	has an variable (property) to keep track of sorting
+	has an instance variable topCard which is the last card in the array
+	
+	Constructors for both shuffled and non shuffled decks
+	
+	Method to shuffle a deck 
+		Create a temp sorted array
+		copy a card from temp to the result, remove that card from temp so it can't be picked again
+		
+	Method to pick a card from a deck
+		returns a random card from a given deck 
+		
+	Method to deal cards from the master deck to a given amount of new smaller decks
+		new Deck[i] = pick from master
+		
+	LEarn how to do sorting 
+	 
+	
+	

@@ -217,8 +217,10 @@ public class Deck {
 		if( (numHands * cardsPer) <= myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
 			for(int j = 0; j < cardsPer; j++) {	//Deals "clockwise"
 				for(int i = 0; i < numHands; i++ ) {
-					result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
-					myDeck[topCard--] = null;			//Sets the topCard = null since it's been "removed"
+					if(myDeck[topCard] != null) {
+						result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
+						myDeck[topCard--] = null;			//Sets the topCard = null since it's been "removed"
+					} //else topCard is null and something else is wrong
 				}
 			}
 		} else {
@@ -240,7 +242,7 @@ public class Deck {
 	 */
 	public String toString() {	
 		String theShizzle = "";
-		//TODO CHECK FOR NULL CARDS?
+
 		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck = 52 (duh)
 			if(isSorted) {
 				for(int i = 0; i < THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4; i++) {
@@ -256,7 +258,7 @@ public class Deck {
 				}
 			}		
 		} else {		//Any # of Cards
-			for(int i = 0; i < topCard; i++ )
+			for(int i = 0; i < topCard+1; i++ )
 				if(myDeck[i] != null )
 					theShizzle = theShizzle + getDeck()[i].toString() + "\n";
 		}
@@ -317,36 +319,19 @@ public class Deck {
 	
 	//MERGE ------------------------------------------------------------
 	
-	/**
-	 * A helper method for comparing and combining subdivided arrays of Cards (This is an insufficient understanding of the mergeSort)
-	 * 
-	 * @author MurphyP1
-	 * @date 10/3/17
-	 * @method merge
-	 * 
-	 * @param deck an array of Cards
-	 * @param l an integer representing the index of the left bound of the  deck
-	 * @param m an integer representing the index of the middle of the deck
-	 * @param r and integer representing the index of the right bound of the deck
-	 * 
-	 * @return void
-	 */
-    
     /**
-	 * A recursive method for adjusting setting up calls to merge to sort Decks all speedy-like
+	 * A method for adjusting setting up calls to recursiveSort to sort Decks all speedy-like
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
 	 * @method mergeSort
 	 * 
-	 * @param deck an array of Cards
-	 * @param l an integer representing the index of the left bound of the  deck
-	 * @param r and integer representing the index of the right bound of the deck
+	 * @param a an array of Cards 
 	 * 
 	 * @return void
 	 */
     
-    Card[] temp; //Whatchu doin out herE? 
+    static Card[] temp; //Whatchu doin out herE? 
     				//idk, sir, sorry! 
     void mergeSort(Card[] a ) {	// sorts a[0],..., a[a.length-1] in ascending order
     		int n = a.length;
@@ -355,9 +340,22 @@ public class Deck {
     		isSorted = true;
     }
     
-    void recursiveSort(Card[] a, int from, int to) {	//Recursive heler: a[from]...a[to]
+    /**
+	 * A recursive method which compares, creates, and merges subdivided arrays
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method recursiveSort
+	 * 
+	 * @param a an array of Cards 
+	 * @param from an integer which marks the starting index of an array
+	 * @param to an integer which marks the ending index of an array
+	 * 
+	 * @return void
+	 */
+    void recursiveSort(Card[] a, int from, int to) {	//Recursive helper: a[from]...a[to]
 	    	if(to-from < 2) {	//Base case for 1 or 2 elements
-	    		if(to > from && a[to].compareTo(a[from]) == -1) {	///Ehhh
+	    		if(from < to && a[to].compareTo(a[from]) == -1) {	//Checks to make sure the two indices have not passed, and compares two cards for a swap
 	    			Card aTemp = a[to]; //Swap a[to] and a[from]
 	    			a[to] = a[from];
 	    			a[from] = aTemp;
@@ -370,6 +368,20 @@ public class Deck {
 	    }	
     } 
 	 
+    /**
+	 * A helper method for comparing and combining subdivided arrays of Cards 
+	 * 
+	 * @author MurphyP1
+	 * @date 10/3/17
+	 * @method merge
+	 * 
+	 * @param a an array of Cards
+	 * @param from an integer representing the index of the left bound of the  deck
+	 * @param middle an integer representing the index of the middle of the deck
+	 * @param to and integer representing the index of the right bound of the deck
+	 * 
+	 * @return void
+	 */
     void merge(Card[] a, int from, int middle, int to ) {		//merges a[from]...a[middle] and a[middle]...a[to]
 	    	int i = from;
 	    	int j = middle + 1;

@@ -248,7 +248,7 @@ public class Card implements Comparable<Card> {
 	public int rankToInt(String r) {
 		for(int i = 0; i < ranks.length; i++) {
 			if(r == ranks[i] ) {
-				return i; // returns the index within suits 
+				return i+2; // returns the index within suits 
 			}
 		}
 		return 2; //If it doesn't match any of the ranks, default to Two
