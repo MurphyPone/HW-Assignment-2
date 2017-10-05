@@ -169,6 +169,7 @@ public class Deck {
 	 * 
 	 * @return a random card from the given array of Cards
 	 */
+	//Need to collapse the deck and remove the card you took out afterward
 	public Card pick(Card[] d) {
 		return d[(int) (Math.random() * d.length) + 1]; 	
 	}
