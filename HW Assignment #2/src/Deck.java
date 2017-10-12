@@ -165,13 +165,16 @@ public class Deck {
 	 * @date 10/3/17
 	 * @method pick
 	 * 
-	 * @param d an array of Cards to draw from
+	 * @param d a Deck of Cards to draw from
 	 * 
 	 * @return a random card from the given array of Cards
 	 */
-	public Card pick(Card[] d) {
-		return d[(int) (Math.random() * d.length) + 1]; 	
-	}
+	public Card pick(Deck d) {
+		int index = (int) (Math.random() * d.getDeck().length) + 1;
+		Card result = new Card(d.getDeck()[index]);
+		d.collapse(index);
+		return result;
+	}	
 	
 	/**
 	 * A method for adjusting contents of a Deck for other interactions such as picking and dealing, but probably not good after shuffling
@@ -210,26 +213,30 @@ public class Deck {
 	 * @return an array of Decks (hands)
 	 */
 	public Deck[] deal(int numHands, int cardsPer) {
-		Deck[] result = new Deck[numHands];
-		for(int i = 0; i < numHands; i++ ) {
-			result[i] = new Deck(cardsPer);	//Creates a new Deck
+		if(numHands > 0 && cardsPer >0) {
+			Deck[] result = new Deck[numHands];
+			for(int i = 0; i < numHands; i++ ) {
+				result[i] = new Deck(cardsPer);	//Creates a new Deck
+			}
+		
+			if( (numHands * cardsPer) <= myDeck.length  ) {	//Checks to make sure that there are enough cards in the given deck
+				for(int j = 0; j < cardsPer; j++) {	//Deals "clockwise"
+					for(int i = 0; i < numHands; i++ ) {
+						if(myDeck[topCard] != null) {
+							result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
+							myDeck[topCard--] = null;			//Sets the topCard = null since it's been "removed"
+						} //else topCard is null and something else is wrong
+					}
+				}
+			} else {
+				System.out.println("Invalid arguments");
+				return null;
+			}
+			return result;
+		} else {
+			return null; 
 		}
 		
-		if( (numHands * cardsPer) <= myDeck.length ) {	//Checks to make sure that there are enough cards in the given deck
-			for(int j = 0; j < cardsPer; j++) {	//Deals "clockwise"
-				for(int i = 0; i < numHands; i++ ) {
-					if(myDeck[topCard] != null) {
-						result[i].myDeck[j] = new Card(myDeck[topCard]);	//Sets the value of the card to a copy of the card from the parent
-						myDeck[topCard--] = null;			//Sets the topCard = null since it's been "removed"
-					} //else topCard is null and something else is wrong
-				}
-			}
-		} else {
-			System.out.println("That's too many cards hombre!!!");
-			return null;
-		}
-	
-		return result;
 	}
 	
 	/**
