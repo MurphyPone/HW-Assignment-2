@@ -30,7 +30,6 @@ public class Deck {
 	 * @date 10/3/17
 	 * @method Deck
 	 * 
-	 * @return a sorted Deck of 52 Cards
 	 */
 	public Deck() {
 		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with room for 52 cards
@@ -47,7 +46,6 @@ public class Deck {
 	 * 
 	 * @param notShuffled a boolean value to determine whether or not the deck should be sorted
 	 * 
-	 * @return a Deck of 52 Cards shuffled according to the notShuffled argument
 	 */
 	public Deck(boolean notShuffled) {
 		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with 52 slots
@@ -69,7 +67,6 @@ public class Deck {
 	 * 
 	 * @param numCards the size of the Deck 
 	 * 
-	 * @return a Deck with a variable amount of Cards 
 	 */
 	public Deck(int numCards) { 
 		myDeck = new Card[numCards];
@@ -236,7 +233,6 @@ public class Deck {
 		} else {
 			return null; 
 		}
-		
 	}
 	
 	/**
