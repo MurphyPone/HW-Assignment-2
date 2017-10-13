@@ -1,62 +1,69 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class DeckTester {
 
 	public static void main(String[] args) {
+
+		File file = new File("Output.txt");
+		PrintWriter output = null;
+
+		try {	
+			output = new PrintWriter(file);	
+		} catch (FileNotFoundException ex) {}
+		  
+		Card tComp1 = new Card(0, 2);
+		Card tComp2 = new Card(2, 3);
 		
-	//Card Testing
-		Card badCard = new Card(3, -8 );		//This is the control for a bad creation
-		System.out.println("Bad Card:" + badCard);
+		CardComparator compy = new CardComparator();
 		
-		Card one = new Card();					//1st Constructor (random)
-		System.out.println("1: " + one);
+		output.println("=============Comparator test=============");
+		output.println(tComp1);
+		output.println("Should be greater than:");
+		output.println(tComp2);
+		output.println("The results");
+		output.println(compy.compare(tComp1, tComp2));
+		output.println();
+		output.println("key: 1 = 1st greater than 2nd");
+		output.println("     0 = they equal");
+		output.println("    -1 = 1st less than 2nd");
+		output.println();
+		output.println();
+		Deck breakThisCode = new Deck(false);
+		output.println("-------Pick Method Test-------");
+		output.println("Initial Deck");
+		output.println(breakThisCode);
+		output.println();
+		output.println("This is the card that was dealt from the Deck:");
+		output.println(breakThisCode.pick(breakThisCode.getDeck()));
+		output.println("Now it should be missing from the deck because it was pulled out");
+		output.println("Results:");
+		output.println(breakThisCode);
+		output.println();
+		output.println();
 		
-		Card two = new Card(0, 4);				//2nd Constructor 
-		System.out.println("2: " + two);
 		
-		Card three = new Card("Spades", "Jack");	//3rd Constructor 
-		System.out.println("3: " + three);
-		
-		Card four = new Card("Diamonds", 7);		//4th Constructor 
-		System.out.println("4: " + four);
-		
-		Card five = new Card(2, "Ace");			//5th Constructor 
-		System.out.println("5: " + five);
-		
-		System.out.println("");
-		
-	//CardComparator Testing
-		CardComparator comp = new CardComparator();
-		System.out.println(one + " = " + one + " ... " + comp.equals(one, one) );
-		System.out.println(one + " = " + two + " ... " + comp.equals(one, two) );
-		System.out.println(one + " compared to " + two + " ... " + comp.compare(one, two) );
-		
-		System.out.println("");
+		output.println("-------Deal Method Test-------");
+		output.println("Initial Deck");
+		output.println(breakThisCode);
+		output.println();
+		output.println("Now We ask it to deal out -2 hands with 3 cards in each");
+		output.println("Results:");
+		try {
+			breakThisCode.deal(-2, 3);
+		} catch (NegativeArraySizeException e) {
+			output.println("NegativeArraySizeException "+ e.getMessage());
+		}
+		output.println();
+		output.println();
 
 		
-	//Deck Testing
-		Deck sorted = new Deck();
-		Deck mixedDeal = new Deck(false);
-		Deck smallDeck = new Deck(26);//This constructor creates an empty array
-		Deck mergeMe = new Deck(false);
 		
-		System.out.print("SORTED\n\n" + sorted);
-		System.out.print("MIXED\n\n" + mixedDeal);
-		System.out.print("SMALL DECK\n\n" + smallDeck);
-		System.out.print("MERGEME\n\n" + mergeMe);
 		
-		System.out.println("");
-
-	//Deal Testing				
-		Deck[] texasHoldEm = sorted.deal(5, 2);	
-		for(int i = 0; i < texasHoldEm.length; i ++) 
-			System.out.print("Hand[" + i + "] = " + texasHoldEm[i]);
-		
-		System.out.println("");
-
-	//Sorting Testing
-		System.out.print("BEFORE THE SORT: \n" + mergeMe.toString());
-		mergeMe.mergeSort(mergeMe.getDeck()) ;
-		System.out.print("\nAFTER THE SORT: \n" + mergeMe.toString());
+             
+		output.close();
 		
 	}
 }
