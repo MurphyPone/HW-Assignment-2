@@ -79,7 +79,7 @@ public class DeckTester {
 		texasHoldEm[0].shuffle();
 		output.println("post Shuffle on holdEm[0] : " + texasHoldEm[0]);
 
-		output.println("Pick from holdEm[0] : " + texasHoldEm[0].pick(texasHoldEm[0])); //TODO this is dumb, pick should just know which deck to pick from...
+		output.println("Pick from holdEm[0] : " + texasHoldEm[0].pick()); 
 		output.println("AFTER PICKING from holdEm[0] : " +texasHoldEm[0]);
 		
 	//Sorting Testing

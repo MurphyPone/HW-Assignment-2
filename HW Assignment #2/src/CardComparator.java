@@ -13,20 +13,26 @@ public class CardComparator implements Comparator<Card> {
 	 * Compares two Cards' ranks 
 	 * 
 	 * @author MurphyP1
-	 * @date 10/3/17
+	 * @date 10/12/17
 	 * @method compare
 	 * 
 	 * @return an integer representing the difference between two cards
 	 */
 	@Override
 	public int compare(Card o1, Card o2) {
-		if(o1.getRank() > o2.getRank()) 
+		if( o1.getSuitInt()  == o2.getSuitInt()) {
+			if(o1.getRank() > o2.getRank() ) { return 1; } 
+			else if( o1.getRank() < o2.getRank()) {return -1; }
+			else { return 0;}
+		} 
+		
+		if( o1.getSuitInt()  > o2.getSuitInt()) {
 			return 1;
-		else if (o1.getRank() < o2.getRank())
+		} else {
 			return -1;
-		else 
-			return 0;
+		}
 	}
+	
 	
 	/**
 	 * checks if two Cards are of equal ranks and value

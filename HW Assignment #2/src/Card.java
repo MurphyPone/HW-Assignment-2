@@ -4,8 +4,6 @@
  * @date 10/3/17
  */
 
-import java.util.*;
-
 public class Card implements Comparable<Card> {
 	//Fields									0			1			2		3
 	private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};

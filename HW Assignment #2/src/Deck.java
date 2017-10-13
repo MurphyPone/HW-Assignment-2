@@ -20,25 +20,37 @@ public class Deck {
 	private Card[] myDeck; //Array which stores individual Cards
 	private int topCard;		//the index of the last non-null card within the deck
 	private boolean isSorted; //No longer needed, but used for determining how to build the toString 
-	private final int THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS = 52;	//There is no reason for this variable to exist 
+	private final int NUMCARDS = 52;	//No comment
 	private static Card[] temp; //inefficient but necessary?
 	
 	/**
-	 * The default constructor for a Deck object which creates a sorted deck of 52 Cards
+	 * The default constructor for a Deck object which creates a sorted deck of NUMCARDS Cards
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
 	 * @method Deck
-	 * 
 	 */
 	public Deck() {
-		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with room for 52 cards
+		this.myDeck = new Card[NUMCARDS]; //Creates an array with room for NUMCARDS 
 		sortedHelp();
 		this.topCard = myDeck.length-1;	//The top card is the last card
 	}
 	
 	/**
-	 * The premium constructor for a Deck object which creates a deck, sorted or unsorted, of 52 Cards
+	 * A constructor which copies another Deck
+	 * 
+	 * @author MurphyP1
+	 * @date 10/12/17
+	 * @method Deck
+	 */
+	public Deck(Deck d) {
+		this.myDeck = d.myDeck;
+		sortedHelp();
+		this.topCard = myDeck.length-1;	//The top card is the last card
+	}
+	
+	/**
+	 * The premium constructor for a Deck object which creates a deck, sorted or unsorted, of NUMCARDS Cards
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -48,7 +60,7 @@ public class Deck {
 	 * 
 	 */
 	public Deck(boolean notShuffled) {
-		this.myDeck = new Card[THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS]; //Creates an array with 52 slots
+		this.myDeck = new Card[NUMCARDS]; //Creates an array with 52 slots
 		
 		if(notShuffled)
 			sortedHelp();
@@ -59,7 +71,7 @@ public class Deck {
 	}
 	
 	/**
-	 * The wimpy constructor for a Deck object which creates an empty deck, with room for a variable amount of Cards
+	 * The wimpy constructor for a Deck object which creates an empty deck, with room for a defined amount of Cards
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -89,7 +101,7 @@ public class Deck {
 		int s = 0;	//Suit counter
 		while (s < 4 ) {		//Do 4x 
 			for(int r = 2; r <= 14; r++) {	//r = rank value	//Should run 13x4 
-				this.myDeck[(13*s)+r-2] = new Card(s, r);	//easy way to convert r ????? -2? although [13x3+13] = 52... shouldn't get any IOB excpetion
+				this.myDeck[(13*s)+r-2] = new Card(s, r);
 			}
 			s++;	//Go to next suit
 		}
@@ -156,7 +168,7 @@ public class Deck {
 	}
 	
 	/**
-	 * A method for fetching a random Card within a given Deck of Cards
+	 * A method for fetching a random Card from myDeck
 	 * 
 	 * @author MurphyP1
 	 * @date 10/3/17
@@ -164,12 +176,12 @@ public class Deck {
 	 * 
 	 * @param d a Deck of Cards to draw from
 	 * 
-	 * @return a random card from the given array of Cards
+	 * @return a random card from myDeck
 	 */
-	public Card pick(Deck d) {
-		int index = (int) (Math.random() * d.getDeck().length) + 1;
-		Card result = new Card(d.getDeck()[index]);
-		d.collapse(index);
+	public Card pick() {	//Draws from myDeck 
+		int index = (int) (Math.random() * myDeck.length) + 1;
+		Card result = new Card(myDeck[index]);
+		collapse(index);
 		return result;
 	}	
 	
@@ -247,13 +259,13 @@ public class Deck {
 	public String toString() {	
 		String theShizzle = "";
 
-		if(myDeck.length == THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS) { //Full Deck = 52 (duh)
+		if(myDeck.length == NUMCARDS) { //Full Deck = 52 (duh)
 			if(isSorted) {
-				for(int i = 0; i < THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4; i++) {
-					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4].toString() 
-							+ "\t\t" + myDeck[i+(THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2)].toString() + "\t\t" + 
-							myDeck[i+(THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/2)+
-							       (THENUMBEROFCARDSWHICHAPPEARINATRADITIONALDECKOFCARDS/4)].toString() + "\n";
+				for(int i = 0; i < NUMCARDS/4; i++) {
+					theShizzle = theShizzle + myDeck[i].toString() + "\t\t" + myDeck[i+NUMCARDS/4].toString() 
+							+ "\t\t" + myDeck[i+(NUMCARDS/2)].toString() + "\t\t" + 
+							myDeck[i+(NUMCARDS/2)+
+							       (NUMCARDS/4)].toString() + "\n";
 				}
 			} else {	//Unsorted	
 				for(int i = 0; i < myDeck.length; i++ ) {	//The assignment only asks for 1 tab, but I'm putting 2 for readability			
@@ -280,16 +292,19 @@ public class Deck {
 	 */
 	public boolean equals(Deck other) {
 		boolean same = true;
-		if(myDeck.length == other.getDeck().length) {	//If they're the same size, do further investigating
+		
+		Deck copy = new Deck(other); //Copy other
+		copy.mergeSort(copy.myDeck); //mergeSort the copy, then use copy for comparison --order does not define equality
+		
+		if(myDeck.length == copy.getDeck().length) {	//If they're the same size, do further investigating
 			for(int i = 0; i < myDeck.length; i++) {
-				if(!myDeck[i].equals(other.getDeck()[i])) //Compares individual Cards
+				if(!myDeck[i].equals(copy.getDeck()[i])) //Compares individual Cards
 					same = false;
 			}
 			return same;
 		}else return false;
 	}
 	//G A D Z O O K S  Searching and sorting time------------------------------------------------------------
-	/* SIGNIFICANT HELP FROM TEXTBOOK */
 	
 	/**
 	 * A method for sorting a Decks linearly
@@ -300,7 +315,7 @@ public class Deck {
 	 * 
 	 * @return void
 	 */
-	public void selectionSort() {	//TODO this thing TODO learn it
+	public void selectionSort() {	
 	  // Sorts a[0], ..., a[a.length-1] in ascending order using Selection Sort.
 	    for (int n = myDeck.length; n > 1; n--) {		//Iterates backwards, stops before the last (first) element bc it should be in place by then
 	    		// Find the index iMax of the largest element among a[0], ..., a[n-1]:
@@ -390,7 +405,7 @@ public class Deck {
 	    
 	    while( i <= middle && j <= to) {	//While both arrays have elements left unprocessed:
 	    		if(a[i].compareTo(a[j]) == -1 ) { 
-	    			temp[k] = a[i++];	//WHAT IS TEMP
+	    			temp[k] = a[i++];
 	    		} else {
 	    			temp[k] = a[j++];
 	    		}
@@ -401,7 +416,7 @@ public class Deck {
 		    	temp[k++] = a[i++];
 	    }
 	    
-	    while(j<= to) {	//Copy tail of second hald, if any, into temp:
+	    while(j<= to) {	//Copy tail of second half, if any, into temp:
 		    	temp[k++] = a[j++];
 	    }
 	    
