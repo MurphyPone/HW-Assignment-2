@@ -18,7 +18,6 @@ public class Card implements Comparable<Card> {
 	 * @author MurphyP1
 	 * @date 10/3/17
 	 * @method Card
-	 * 
 	 */
 	public Card() {
 		this.suit = (int) (Math.random()*4);
@@ -34,7 +33,6 @@ public class Card implements Comparable<Card> {
 	 * 
 	 * @param mSuit an integer which defines the suit of the card
 	 * @param mRank an integer which defines the rank of the card
-	 *
 	 */
 	public Card(int mSuit, int mRank ) {
 		if(isValidSuit(mSuit))
@@ -57,7 +55,6 @@ public class Card implements Comparable<Card> {
 	 * 
 	 * @param mSuit a string which defines the suit of the card
 	 * @param mRank a string which defines the rank of the card
-	 * 
 	 */
 	public Card(String mSuit, String mRank) {
 		if(isValidSuit(mSuit))
@@ -80,7 +77,6 @@ public class Card implements Comparable<Card> {
 	 * 
 	 * @param mSuit a string which defines the suit of the card
 	 * @param mRank an integer which defines the rank of the card
-	 * 
 	 */
 	public Card(String mSuit, int  mRank) {
 		if(isValidSuit(mSuit))
@@ -103,7 +99,6 @@ public class Card implements Comparable<Card> {
 	 * 
 	 * @param mSuit an integer which defines the suit of the card
 	 * @param mRank a string which defines the rank of the card
-	 * 
 	 */
 	public Card(int mSuit, String  mRank) {
 		if(isValidSuit(mSuit))

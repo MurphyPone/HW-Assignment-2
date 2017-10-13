@@ -1,3 +1,9 @@
+/**
+ * Class Description: This Class creates several Cards and Decks and performs a series of tests upon each to check if they work
+ * @author MurphyP1
+ * @date 10/12/17
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -19,7 +25,7 @@ public class DeckTester {
 	//Card Testing
 		output.println("------------CARD TESTING------------");
 
-		Card badCard = new Card(3, -8 );		//This is the control for a bad creation
+		Card badCard = new Card(9, -8 );		//This is the control for a bad creation
 		output.println("Bad Card:" + badCard);
 		
 		Card one = new Card();					//1st Constructor (random)
@@ -48,34 +54,47 @@ public class DeckTester {
 		output.println(one + " compared to " + two + " ... " + comp.compare(one, two) );
 		
 		output.println("");
-
 		
+	//Other Comparison testing
+		Deck a = new Deck();			//52 sorted cards
+		Deck b = new Deck(false);	//52 shuffled cards 
+		Deck c = new Deck();
+		c.collapse(10);
+		
+		output.println("a = b...." + a.equals(b));
+		output.println("a = c...." + a.equals(c));
+		a.collapse(10);
+		output.println("a = c after both are -1 card...." + a.equals(c));
+
 	//Deck Testing
-		output.println("------------DECK TESTING------------");
+		output.println("\n------------DECK TESTING------------");
 		
 		Deck sorted = new Deck();
 		Deck mixedDeal = new Deck(false);
 		Deck smallDeck = new Deck(26);//This constructor creates an empty array
 		Deck mergeMe = new Deck(false);
+		Deck selectMe = new Deck(false);
 		
-		output.print("SORTED\n\n" + sorted);
-		output.print("MIXED\n\n" + mixedDeal);
-		output.print("SMALL DECK\n\n" + smallDeck);
-		output.print("MERGEME\n\n" + mergeMe);
-		
+		output.println("SORTED\n\n" + sorted);
+		output.println("MIXED\n\n" + mixedDeal);
+		output.println("SMALL DECK\n\n" + smallDeck);
+		output.println("MERGEME\n\n" + mergeMe);
+		output.println("SELECTME\n\n" + selectMe);
+
 		output.println("");
 
 	//Deal Testing		
 		output.println("------------DEAL TESTING------------");
 
 		Deck[] texasHoldEm = sorted.deal(5, 2);	
-		for(int i = 0; i < texasHoldEm.length; i ++) 	//TODO Error here bc hold has no length
-			output.print("Hand[" + i + "] = " + texasHoldEm[i]);
+		for(int i = 0; i < texasHoldEm.length; i ++) 	
+			output.print("holdEm[" + i + "] = " + texasHoldEm[i]);
 		
 		output.println("");
 	//Pick and Shuffle Testing
 		output.println("------------PICK AND SHUFFLE TESTING------------");
 		
+		output.println("Pre Shuffle on holdEm[0] : " + texasHoldEm[0]);
 		texasHoldEm[0].shuffle();
 		output.println("post Shuffle on holdEm[0] : " + texasHoldEm[0]);
 
@@ -83,12 +102,15 @@ public class DeckTester {
 		output.println("AFTER PICKING from holdEm[0] : " +texasHoldEm[0]);
 		
 	//Sorting Testing
-		output.print("BEFORE THE SORT: \n" + mergeMe.toString());
-		mergeMe.mergeSort(mergeMe.getDeck()) ;
-		output.print("\nAFTER THE SORT: \n" + mergeMe.toString());
+		output.print("BEFORE THE SELECTION SORT: \n" + selectMe.toString());
+		selectMe.selectionSort() ;
+		output.println("\nAFTER THE SELECTION SORT: \n" + selectMe.toString());
+		
+		output.println("BEFORE THE MERGE SORT: \n" + mergeMe.toString());
+		mergeMe.mergeSort() ;
+		output.println("\nAFTER THE MERGE SORT: \n" + mergeMe.toString());
 		
 	//Housekeeping
 		output.close();
-		
 	}
 }
